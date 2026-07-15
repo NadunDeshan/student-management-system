@@ -1,0 +1,28 @@
+# Laravel
+/backend/vendor/
+/backend/node_modules/
+/backend/public/storage
+/backend/storage/*.key
+/backend/.env
+
+# React
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Composer
+composer.lock
+
+# npm
+package-lock.json
