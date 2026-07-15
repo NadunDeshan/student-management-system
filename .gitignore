@@ -20,9 +20,3 @@ Thumbs.db
 
 # Logs
 *.log
-
-# Composer
-composer.lock
-
-# npm
-package-lock.json
