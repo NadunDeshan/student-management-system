@@ -10,6 +10,10 @@ import StudentCreate from '../pages/students/StudentCreate';
 import StudentDetails from '../pages/students/StudentDetails';
 import StudentEdit from '../pages/students/StudentEdit';
 import StudentList from '../pages/students/StudentList';
+import LecturerList from '../pages/lecturers/LecturerList';
+import LecturerCreate from '../pages/lecturers/LecturerCreate';
+import LecturerEdit from '../pages/lecturers/LecturerEdit';
+import LecturerDetails from '../pages/lecturers/LecturerDetails';
 
 function AppRoutes() {
     return (
@@ -62,7 +66,22 @@ function AppRoutes() {
 
                 <Route
                     path="lecturers"
-                    element={<ComingSoon title="Lecturers" />}
+                    element={<LecturerList />}
+                />
+
+                <Route
+                    path="lecturers/create"
+                    element={<LecturerCreate />}
+                />
+
+                <Route
+                    path="lecturers/:id"
+                    element={<LecturerDetails />}
+                />
+
+                <Route
+                    path="lecturers/:id/edit"
+                    element={<LecturerEdit />}
                 />
 
                 <Route
