@@ -20,21 +20,17 @@ class LecturerController extends Controller
      */
     public function index(Request $request)
     {
-        $search = trim(
-            (string) $request->query('search', '')
-        );
-
+        $search = trim((string) $request->query('search', ''));
         $lecturers = Lecturer::query()
-            ->when(
-                $search !== '',
+            ->when($search !== '',
                 function ($query) use ($search) {
                     $query->where(
-                        function ($lecturerQuery) use ($search) {
+                        function ($lecturerQuery) use ($search) {   //This creates a grouped set of search conditions.
                             $lecturerQuery
                                 ->where(
                                     'lecturer_number',
                                     'like',
-                                    "%{$search}%"
+                                    "%{$search}%"   //Why use %? = The first % means any characters can appear before the search value.
                                 )
                                 ->orWhere(
                                     'first_name',
@@ -65,9 +61,9 @@ class LecturerController extends Controller
                     );
                 }
             )
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+            ->latest()  //The newest lecturer appears first.
+            ->paginate(10)  //This returns only 10 lecturers per page.
+            ->withQueryString();   //Without withQueryString(), the search value may be removed from generated pagination links.
 
         return LecturerResource::collection($lecturers);
     }
@@ -75,10 +71,7 @@ class LecturerController extends Controller
     /**
      * Create a lecturer.
      */
-    public function store(
-        StoreLecturerRequest $request
-    ): JsonResponse {
-        $uploadedImage = null;
+    public function store(StoreLecturerRequest $request): JsonResponse {$uploadedImage = null;
 
         try {
             $validated = $request->validated();

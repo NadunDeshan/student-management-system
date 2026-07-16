@@ -11,6 +11,7 @@ import {
 } from '../../api/lecturerApi';
 
 import LecturerForm from '../../components/LecturerForm';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 const initialFormData = {
     lecturer_number: '',
@@ -38,6 +39,7 @@ function LecturerCreate() {
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] =
         useState(false);
+
 
     /**
      * Remove the generated image preview URL when
@@ -150,6 +152,7 @@ function LecturerCreate() {
         } finally {
             setSubmitting(false);
         }
+
     };
 
     return (
@@ -167,7 +170,7 @@ function LecturerCreate() {
 
                 <Link
                     to="/admin/lecturers"
-                    className="btn btn-outline-secondary"
+                    className="btn btn-outline-secondary stext"
                 >
                     Back to Lecturers
                 </Link>

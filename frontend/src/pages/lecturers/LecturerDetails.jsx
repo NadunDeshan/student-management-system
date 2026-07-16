@@ -228,7 +228,7 @@ function LecturerDetails() {
                 <div>
                     <Link
                         to="/admin/lecturers"
-                        className="btn btn-outline-secondary me-2"
+                        className="btn btn-outline-secondary stext me-2"
                     >
                         Back
                     </Link>
@@ -253,7 +253,7 @@ function LecturerDetails() {
             </div>
 
             <div className="content-card p-4">
-                <div className="text-center mb-4">
+                <div className="text-center stext mb-4">
                     {lecturer.profile_image_url ? (
                         <img
                             src={
@@ -299,11 +299,11 @@ function LecturerDetails() {
                 <div className="row">
                     {details.map(([label, value]) => (
                         <div
-                            className="col-md-6 mb-3"
+                            className="col-md-6 mb-3 stext"
                             key={label}
                         >
                             <div className="border rounded p-3 h-100">
-                                <small className="text-muted">
+                                <small className=" stext">
                                     {label}
                                 </small>
 

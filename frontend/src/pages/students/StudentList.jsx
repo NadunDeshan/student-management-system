@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 import {
     FaEye,
     FaPen,
@@ -22,6 +23,8 @@ function StudentList() {
     const [meta, setMeta] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+
 
     const loadStudents = useCallback(async () => {
         try {
@@ -94,6 +97,7 @@ function StudentList() {
             );
         }
     };
+    DocumentTitle('Student List');
 
     return (
         <>

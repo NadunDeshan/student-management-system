@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {
     FaBook,
     FaChalkboardTeacher,
@@ -13,11 +13,12 @@ function Sidebar() {
         <aside className="admin-sidebar">
             <div className="sidebar-brand">
                 <div className="sidebar-brand-icon">
-                    <FaGraduationCap />
+                    <FaGraduationCap/>
                 </div>
 
                 <div>
-                    <h4>SMS Portal</h4>
+                    <h4>WELCOME TO SMS</h4>
+                    {/*<h4>SMS Portal</h4>*/}
                     <small>Admin Panel</small>
                 </div>
             </div>
@@ -29,7 +30,7 @@ function Sidebar() {
                     to="/admin/dashboard"
                     className="sidebar-link"
                 >
-                    <FaTachometerAlt />
+                    <FaTachometerAlt/>
                     <span>Dashboard</span>
                 </NavLink>
 
@@ -37,15 +38,16 @@ function Sidebar() {
                     to="/admin/students"
                     className="sidebar-link"
                 >
-                    <FaUserGraduate />
+                    <FaUserGraduate/>
                     <span>Students</span>
                 </NavLink>
+
 
                 <NavLink
                     to="/admin/lecturers"
                     className="sidebar-link"
                 >
-                    <FaChalkboardTeacher />
+                    <FaChalkboardTeacher/>
                     <span>Lecturers</span>
                 </NavLink>
 
@@ -53,7 +55,7 @@ function Sidebar() {
                     to="/admin/subjects"
                     className="sidebar-link"
                 >
-                    <FaBook />
+                    <FaBook/>
                     <span>Subjects</span>
                 </NavLink>
 
@@ -61,9 +63,10 @@ function Sidebar() {
                     to="/admin/exams"
                     className="sidebar-link"
                 >
-                    <FaClipboardList />
+                    <FaClipboardList/>
                     <span>Exams</span>
                 </NavLink>
+
             </nav>
         </aside>
     );

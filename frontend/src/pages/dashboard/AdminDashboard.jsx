@@ -4,6 +4,7 @@ import {
     FaClipboardList,
     FaUserGraduate,
 } from 'react-icons/fa';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 function AdminDashboard() {
     const cards = [
@@ -14,20 +15,21 @@ function AdminDashboard() {
         },
         {
             title: 'Lecturers',
-            value: 'Coming soon',
+            value: 'Manage',
             icon: <FaChalkboardTeacher />,
         },
-        {
-            title: 'Subjects',
-            value: 'Coming soon',
-            icon: <FaBook />,
-        },
-        {
-            title: 'Exams',
-            value: 'Coming soon',
-            icon: <FaClipboardList />,
-        },
+        // {
+        //     title: 'Subjects',
+        //     value: 'Coming soon',
+        //     icon: <FaBook />,
+        // },
+        // {
+        //     title: 'Exams',
+        //     value: 'Coming soon',
+        //     icon: <FaClipboardList />,
+        // },
     ];
+    DocumentTitle('Dashboard');
 
     return (
         <>
@@ -59,7 +61,7 @@ function AdminDashboard() {
                                 {card.value}
                             </h3>
 
-                            <span className="text-muted">
+                            <span className="stext">
                                 {card.title}
                             </span>
                         </div>

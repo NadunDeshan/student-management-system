@@ -11,7 +11,7 @@
 body {
     margin: 0;
     min-width: 320px;
-    background: #f3f6fb;
+    background: linear-gradient(150deg, #155d9a, #0c2723);
 }
 
 a {
@@ -22,7 +22,9 @@ a {
     min-height: 100vh;
     display: flex;
 }
-
+.stext{
+    color: white;
+}
 .admin-sidebar {
     position: fixed;
     top: 0;
@@ -30,7 +32,7 @@ a {
     width: 260px;
     min-height: 100vh;
     padding: 24px 18px;
-    background: linear-gradient(180deg, #173d36, #0c2723);
+    background: linear-gradient(180deg, #155d9a, #0c2723);
     color: white;
     z-index: 1000;
 }
@@ -38,8 +40,8 @@ a {
 .sidebar-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 10px 28px;
+    gap: 20px;
+    padding: 1px 2px 28px;
 }
 
 .sidebar-brand-icon {
@@ -102,8 +104,9 @@ a {
     justify-content: space-between;
     min-height: 72px;
     padding: 14px 28px;
-    border-bottom: 1px solid #e4e8ef;
-    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid #155d9a;
+    background: rgb(18 46 69);
+    color: white;
     backdrop-filter: blur(10px);
 }
 
@@ -146,26 +149,29 @@ a {
     margin: 0;
     font-size: 26px;
     font-weight: 700;
+    color: white;
 }
 
 .page-subtitle {
     margin: 5px 0 0;
-    color: #6b7280;
+    color: #d8dbe3;
 }
 
 .content-card {
-    border: 1px solid #e5e9ef;
+    border: 1px solid #647fae;
     border-radius: 16px;
-    background: white;
+    background: rgb(9 39 66);
     box-shadow: 0 7px 24px rgba(26, 46, 67, 0.06);
+    padding: 20px;
 }
 
 .stat-card {
     height: 100%;
     padding: 22px;
-    border: 1px solid #e5e9ef;
+    border: 1px solid #f9f9fa;
     border-radius: 15px;
-    background: white;
+    background: rgb(39 69 138 / 0.15);
+    color: white;
     box-shadow: 0 7px 24px rgba(26, 46, 67, 0.05);
 }
 
@@ -175,8 +181,8 @@ a {
     height: 48px;
     place-items: center;
     border-radius: 13px;
-    background: #e5f3ef;
-    color: #17624f;
+    background: #f6faf8;
+    color: #122e45;
     font-size: 23px;
 }
 
@@ -201,7 +207,7 @@ a {
     place-items: center;
     border-radius: 50%;
     background: #e4efec;
-    color: #17624f;
+    color: #122e45;
     font-weight: 700;
 }
 
@@ -220,6 +226,7 @@ a {
     border: 3px solid #e2e8e6;
     border-radius: 50%;
     object-fit: cover;
+    color: white;
 }
 
 .table > :not(caption) > * > * {
@@ -229,14 +236,14 @@ a {
 .table thead th {
     padding-top: 14px;
     padding-bottom: 14px;
-    color: #46515c;
-    background: #f5f8f7;
+    color: #f9f9fa;
+    background: #122e45;
     white-space: nowrap;
 }
 
 .form-label {
     font-weight: 600;
-    color: #364152;
+    color: #ffffff;
 }
 
 .required-mark {
@@ -251,12 +258,12 @@ a {
 
 .btn-system {
     border: none;
-    background: #17624f;
+    background: #155d9a;
     color: white;
 }
 
 .btn-system:hover {
-    background: #0f4c3d;
+    background: #6eafda;
     color: white;
 }
 

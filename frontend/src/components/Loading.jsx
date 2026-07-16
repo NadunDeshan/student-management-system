@@ -1,8 +1,8 @@
 function Loading({ message = 'Loading...' }) {
     return (
-        <div className="text-center py-5">
+        <div className="text-center stext py-5">
             <div
-                className="spinner-border text-success"
+                className="spinner-border stext"
                 role="status"
             >
                 <span className="visually-hidden">
@@ -10,7 +10,7 @@ function Loading({ message = 'Loading...' }) {
                 </span>
             </div>
 
-            <p className="mt-3 text-muted">{message}</p>
+            <p className="mt-3 stext">{message}</p>
         </div>
     );
 }

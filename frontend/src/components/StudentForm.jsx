@@ -94,7 +94,7 @@ function StudentForm({
                         {fieldError('profile_image')}
                     </div>
 
-                    <small className="text-muted">
+                    <small className="stext">
                         JPG, PNG or WEBP. Maximum size: 2 MB.
                     </small>
                 </div>

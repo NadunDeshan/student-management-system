@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 
 function ComingSoon({ title }) {
     return (
-        <div className="content-card p-5 text-center">
+        <div className="content-card stext p-5 text-center">
             <h2>{title}</h2>
 
-            <p className="text-muted">
+            <p className="stext">
                 This section will be implemented after the
                 Student CRUD is complete.
             </p>

@@ -72,7 +72,7 @@ function StudentDetails() {
                 <div>
                     <Link
                         to="/admin/students"
-                        className="btn btn-outline-secondary me-2"
+                        className="btn btn-outline-secondary stext me-2"
                     >
                         Back
                     </Link>
@@ -88,7 +88,7 @@ function StudentDetails() {
             </div>
 
             <div className="content-card p-4">
-                <div className="text-center mb-4">
+                <div className="text-center stext mb-4">
                     {student.profile_image_url ? (
                         <img
                             src={student.profile_image_url}
@@ -97,7 +97,7 @@ function StudentDetails() {
                         />
                     ) : (
                         <div
-                            className="student-image-placeholder mx-auto"
+                            className="student-image-placeholder  mx-auto"
                             style={{
                                 width: '145px',
                                 height: '145px',
@@ -125,18 +125,18 @@ function StudentDetails() {
                     </span>
                 </div>
 
-                <div className="row">
+                <div className="row stext" >
                     {details.map(([label, value]) => (
                         <div
                             className="col-md-6 mb-3"
                             key={label}
                         >
                             <div className="border rounded p-3 h-100">
-                                <small className="text-muted">
+                                <small className="stext">
                                     {label}
                                 </small>
 
-                                <div className="fw-semibold mt-1 text-capitalize">
+                                <div className="fw-semibold  mt-1 text-capitalize">
                                     {value}
                                 </div>
                             </div>

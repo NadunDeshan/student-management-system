@@ -8,7 +8,7 @@ function Navbar() {
                     Student Management System
                 </h2>
 
-                <small className="text-muted">
+                <small className="stext">
                     Manage students from the admin panel
                 </small>
             </div>
@@ -26,8 +26,8 @@ function Navbar() {
 
                 <div className="d-none d-md-block">
                     <strong>Administrator</strong>
-                    <div className="small text-muted">
-                        System Admin
+                    <div className="small stext"  >
+                        <span>System Admin</span>
                     </div>
                 </div>
             </div>

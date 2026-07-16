@@ -108,7 +108,7 @@ function StudentCreate() {
 
                 <Link
                     to="/admin/students"
-                    className="btn btn-outline-secondary"
+                    className="btn btn-outline-secondary stext "
                 >
                     Back to Students
                 </Link>
