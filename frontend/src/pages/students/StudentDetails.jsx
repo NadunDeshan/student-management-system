@@ -3,6 +3,7 @@ import { FaPen } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
 import { getStudent } from '../../api/studentApi';
 import Loading from '../../components/Loading';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 function StudentDetails() {
     const { id } = useParams();
@@ -10,6 +11,8 @@ function StudentDetails() {
     const [student, setStudent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    DocumentTitle('View Student');
 
     useEffect(() => {
         const loadStudent = async () => {
@@ -41,6 +44,7 @@ function StudentDetails() {
         );
     }
 
+
     const details = [
         ['Student number', student.student_number],
         ['Full name', student.full_name],
@@ -55,6 +59,7 @@ function StudentDetails() {
         ['Created at', student.created_at],
         ['Updated at', student.updated_at],
     ];
+
 
     return (
         <>

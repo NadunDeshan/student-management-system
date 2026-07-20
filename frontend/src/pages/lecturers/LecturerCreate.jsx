@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
-import {
-    Link,
-    useNavigate,
-} from 'react-router-dom';
-
+import {Link, useNavigate,} from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-import {
-    createLecturer,
-} from '../../api/lecturerApi';
-
+import {createLecturer,} from '../../api/lecturerApi';
 import LecturerForm from '../../components/LecturerForm';
 import DocumentTitle from "../../hooks/DocumentTitle.js";
+import defaultAvatar from '../../assets/images/default-avatar.png';
 
 const initialFormData = {
     lecturer_number: '',
@@ -34,11 +27,13 @@ function LecturerCreate() {
         useState(initialFormData);
 
     const [imagePreview, setImagePreview] =
-        useState('');
+        useState(defaultAvatar);
 
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] =
         useState(false);
+
+    DocumentTitle('Add Lecturer');
 
 
     /**
@@ -79,7 +74,7 @@ function LecturerCreate() {
         if (file) {
             setImagePreview(URL.createObjectURL(file));
         } else {
-            setImagePreview('');
+            setImagePreview(defaultAvatar);
         }
     };
 
@@ -123,11 +118,22 @@ function LecturerCreate() {
             await createLecturer(data);
 
             await Swal.fire({
-                title: 'Lecturer created',
-                text: 'The lecturer was created successfully.',
-                icon: 'success',
-                timer: 1600,
+                // title: 'Lecturer created',
+                // text: 'The lecturer was created successfully.',
+                // icon: 'success',
+                // timer: 1600,
+                // showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "The lecturer was created successfully",
                 showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: "rgb(135 227 169)",
+                color: "#1f2937",
+                iconColor: "rgb(7 117 48)",
+                width: "350px",
             });
 
             navigate('/admin/lecturers');
@@ -149,6 +155,7 @@ function LecturerCreate() {
                 message,
                 'error'
             );
+
         } finally {
             setSubmitting(false);
         }

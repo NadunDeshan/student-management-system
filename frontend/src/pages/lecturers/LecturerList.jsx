@@ -21,6 +21,7 @@ import {
 } from '../../api/lecturerApi';
 
 import Loading from '../../components/Loading';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 function LecturerList() {
     const [lecturers, setLecturers] = useState([]);
@@ -30,6 +31,8 @@ function LecturerList() {
     const [meta, setMeta] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    DocumentTitle('Lecturers List');
 
     /**
      * Load lecturers from the Laravel API.
@@ -99,11 +102,17 @@ function LecturerList() {
             await deleteLecturer(lecturer.id);
 
             await Swal.fire({
-                title: 'Deleted',
-                text: 'Lecturer deleted successfully.',
-                icon: 'success',
-                timer: 1600,
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Lecture deleted successfully.",
                 showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: "rgb(135 227 169)",
+                color: "#1f2937",
+                iconColor: "rgb(7 117 48)",
+                width: "350px",
             });
 
             /*

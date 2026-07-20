@@ -24,7 +24,7 @@ class UpdateLecturerRequest extends FormRequest
                 Rule::unique(
                     'lecturers',
                     'lecturer_number'
-                )->ignore($lecturer),
+                )->ignore($lecturer),  //Check all lecturers except the lecturer currently being updated.
             ],
 
             'first_name' => [

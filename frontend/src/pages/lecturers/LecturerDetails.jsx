@@ -22,6 +22,7 @@ import {
 } from '../../api/lecturerApi';
 
 import Loading from '../../components/Loading';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 function LecturerDetails() {
     const { id } = useParams();
@@ -35,6 +36,8 @@ function LecturerDetails() {
 
     const [error, setError] =
         useState('');
+
+    DocumentTitle('View Lecturer');
 
     /**
      * Load the selected lecturer.
@@ -119,11 +122,22 @@ function LecturerDetails() {
             await deleteLecturer(lecturer.id);
 
             await Swal.fire({
-                title: 'Deleted',
-                text: 'Lecturer deleted successfully.',
-                icon: 'success',
-                timer: 1600,
+                // title: 'Deleted',
+                // text: 'Lecturer deleted successfully.',
+                // icon: 'success',
+                // timer: 1600,
+                // showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Lecturer deleted successfully.",
                 showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: "rgb(135 227 169)",
+                color: "#1f2937",
+                iconColor: "rgb(7 117 48)",
+                width: "350px",
             });
 
             navigate('/admin/lecturers');

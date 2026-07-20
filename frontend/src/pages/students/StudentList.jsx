@@ -79,11 +79,22 @@ function StudentList() {
             await deleteStudent(student.id);
 
             await Swal.fire({
-                title: 'Deleted',
-                text: 'Student deleted successfully.',
-                icon: 'success',
-                timer: 1600,
+                // title: 'Deleted',
+                // text: 'Student deleted successfully.',
+                // icon: 'success',
+                // timer: 1600,
+                // showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Student deleted successfully.",
                 showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: "rgb(135 227 169)",
+                color: "#1f2937",
+                iconColor: "rgb(7 117 48)",
+                width: "350px",
             });
 
             loadStudents();

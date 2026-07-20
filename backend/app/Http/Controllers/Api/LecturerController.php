@@ -71,7 +71,8 @@ class LecturerController extends Controller
     /**
      * Create a lecturer.
      */
-    public function store(StoreLecturerRequest $request): JsonResponse {$uploadedImage = null;
+    public function store(StoreLecturerRequest $request): JsonResponse {
+        $uploadedImage = null;
 
         try {
             $validated = $request->validated();
@@ -86,6 +87,10 @@ class LecturerController extends Controller
 
                 $validated['profile_image'] =
                     $uploadedImage;
+            }else {
+
+                $validated['profile_image'] = 'students/profile-images/default-avatar.png';
+
             }
 
             $lecturer = DB::transaction(
@@ -97,19 +102,19 @@ class LecturerController extends Controller
                 'message' =>
                     'Lecturer created successfully.',
                 'data' =>
-                    new LecturerResource($lecturer),
+                    new LecturerResource($lecturer), //This converts the created lecturer into the format defined by LecturerResource.
             ], 201);
         } catch (Throwable $exception) {
             if (
-                $uploadedImage !== null &&
+                $uploadedImage !== null &&   //Delete uploaded image when creation fails
                 Storage::disk('public')
                     ->exists($uploadedImage)
             ) {
                 Storage::disk('public')
-                    ->delete($uploadedImage);
+                    ->delete($uploadedImage);  // Without this deletion, unused images would remain in storage.
             }
 
-            report($exception);
+            report($exception);   //This reports the error to Laravel's logging system.
 
             return response()->json([
                 'success' => false,
@@ -122,9 +127,7 @@ class LecturerController extends Controller
     /**
      * Display one lecturer.
      */
-    public function show(
-        Lecturer $lecturer
-    ): JsonResponse {
+    public function show(Lecturer $lecturer): JsonResponse {
         return response()->json([
             'success' => true,
             'data' =>
@@ -135,15 +138,12 @@ class LecturerController extends Controller
     /**
      * Update a lecturer.
      */
-    public function update(
-        UpdateLecturerRequest $request,
-        Lecturer $lecturer
-    ): JsonResponse {
+    public function update(UpdateLecturerRequest $request, Lecturer $lecturer): JsonResponse {
         $oldImage = $lecturer->profile_image;
         $newImage = null;
 
         try {
-            $validated = $request->validated();
+            $validated = $request->validated();  //This retrieves the fields that passed the update validation rules.
 
             if ($request->hasFile('profile_image')) {
                 $newImage = $request
@@ -157,10 +157,7 @@ class LecturerController extends Controller
                     $newImage;
             }
 
-            DB::transaction(function () use (
-                $lecturer,
-                $validated
-            ) {
+            DB::transaction(function () use ($lecturer, $validated) {
                 $lecturer->update($validated);
             });
 
@@ -179,7 +176,7 @@ class LecturerController extends Controller
                 'message' =>
                     'Lecturer updated successfully.',
                 'data' => new LecturerResource(
-                    $lecturer->fresh()
+                    $lecturer->fresh()  //Without fresh(), the model may not include some database-generated or automatically modified values.
                 ),
             ]);
         } catch (Throwable $exception) {
@@ -194,7 +191,7 @@ class LecturerController extends Controller
 
             report($exception);
 
-            return response()->json([
+            return response()->json([  //This sends a server-error response to the frontend.
                 'success' => false,
                 'message' =>
                     'Unable to update the lecturer.',

@@ -7,6 +7,7 @@ import {
 } from '../../api/studentApi';
 import Loading from '../../components/Loading';
 import StudentForm from '../../components/StudentForm';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 function StudentEdit() {
     const { id } = useParams();
@@ -18,6 +19,8 @@ function StudentEdit() {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [loadError, setLoadError] = useState('');
+
+    DocumentTitle('Update Student');
 
     useEffect(() => {
         const loadStudent = async () => {
@@ -94,11 +97,22 @@ function StudentEdit() {
             await updateStudent(id, data);
 
             await Swal.fire({
-                title: 'Student updated',
-                text: 'The student was updated successfully.',
-                icon: 'success',
-                timer: 1600,
+                // title: 'Student updated',
+                // text: 'The student was updated successfully.',
+                // icon: 'success',
+                // timer: 1600,
+                // showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "The student was updated successfully.",
                 showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: "rgb(135 227 169)",
+                color: "#1f2937",
+                iconColor: "rgb(7 117 48)",
+                width: "350px",
             });
 
             navigate(`/admin/students/${id}`);

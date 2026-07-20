@@ -6,14 +6,20 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLecturerRequest extends FormRequest
 {
-    public function authorize(): bool
+    public function authorize(): bool   //This means the method must return a Boolean value:
     {
-        return true;
+        return true;  //Allow this request. Every user who reaches this endpoint is allowed to submit the lecturer form.
     }
 
-    public function rules(): array
+    public function rules(): array  //This method contains all validation rules.
     {
         return [
+
+            //'field_name' => [
+            //    'rule1',
+            //    'rule2',
+            //]
+
             'lecturer_number' => [
                 'required',
                 'string',

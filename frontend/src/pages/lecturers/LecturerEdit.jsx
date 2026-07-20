@@ -1,23 +1,10 @@
-import {
-    useEffect,
-    useState,
-} from 'react';
-
-import {
-    Link,
-    useNavigate,
-    useParams,
-} from 'react-router-dom';
-
+import {useEffect, useState,} from 'react';
+import {Link, useNavigate, useParams,} from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-import {
-    getLecturer,
-    updateLecturer,
-} from '../../api/lecturerApi';
-
+import {getLecturer, updateLecturer,} from '../../api/lecturerApi';
 import Loading from '../../components/Loading';
 import LecturerForm from '../../components/LecturerForm';
+import DocumentTitle from "../../hooks/DocumentTitle.js";
 
 function LecturerEdit() {
     const { id } = useParams();
@@ -40,6 +27,8 @@ function LecturerEdit() {
 
     const [loadError, setLoadError] =
         useState('');
+
+    DocumentTitle('Edit Lecturer');
 
     /**
      * Load the lecturer from Laravel.
@@ -195,12 +184,29 @@ function LecturerEdit() {
             await updateLecturer(id, data);
 
             await Swal.fire({
-                title: 'Lecturer updated',
-                text: 'The lecturer was updated successfully.',
-                icon: 'success',
-                timer: 1600,
+                // toast: true,
+                // position: "top-end",
+                // title: 'Lecturer updated',
+                // text: 'The lecturer was updated successfully.',
+                // icon: 'success',
+                // timerProgressBar: true,
+                // timer: 1600,
+                // showConfirmButton: false,
+                // iconColor: "rgb(7 117 48)",
+                // width: "460px",
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "The lecturer was created successfully.",
                 showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: "rgb(135 227 169)",
+                color: "#1f2937",
+                iconColor: "rgb(7 117 48)",
+                width: "350px",
             });
+
 
             navigate(`/admin/lecturers/${id}`);
         } catch (requestError) {
@@ -219,6 +225,8 @@ function LecturerEdit() {
                     'error'
                 );
 
+
+
                 return;
             }
 
@@ -231,6 +239,7 @@ function LecturerEdit() {
                 message,
                 'error'
             );
+
         } finally {
             setSubmitting(false);
         }

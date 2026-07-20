@@ -60,6 +60,11 @@ class StudentController extends Controller
                             'students/profile-images',
                             'public'
                         );
+
+                }else {
+
+                    $validated['profile_image'] = 'students/profile-images/default-avatar.png';
+
                 }
 
                 return Student::create($validated);
@@ -185,7 +190,7 @@ class StudentController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Student deleted successfully.',
+                'message' => 'Student Deleted successfully.',
             ]);
         } catch (Throwable $exception) {
             report($exception);
