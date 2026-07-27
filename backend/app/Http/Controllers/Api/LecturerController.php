@@ -7,6 +7,7 @@ use App\Http\Requests\StoreLecturerRequest;
 use App\Http\Requests\UpdateLecturerRequest;
 use App\Http\Resources\LecturerResource;
 use App\Models\Lecturer;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,105 +22,116 @@ class LecturerController extends Controller
     public function index(Request $request)
     {
         $search = trim((string) $request->query('search', ''));
+
         $lecturers = Lecturer::query()
-            ->when($search !== '',
-                function ($query) use ($search) {
-                    $query->where(
-                        function ($lecturerQuery) use ($search) {   //This creates a grouped set of search conditions.
-                            $lecturerQuery
-                                ->where(
-                                    'lecturer_number',
-                                    'like',
-                                    "%{$search}%"   //Why use %? = The first % means any characters can appear before the search value.
-                                )
-                                ->orWhere(
-                                    'first_name',
-                                    'like',
-                                    "%{$search}%"
-                                )
-                                ->orWhere(
-                                    'last_name',
-                                    'like',
-                                    "%{$search}%"
-                                )
-                                ->orWhere(
-                                    'email',
-                                    'like',
-                                    "%{$search}%"
-                                )
-                                ->orWhere(
-                                    'department',
-                                    'like',
-                                    "%{$search}%"
-                                )
-                                ->orWhere(
-                                    'specialization',
-                                    'like',
-                                    "%{$search}%"
-                                );
-                        }
-                    );
-                }
-            )
-            ->latest()  //The newest lecturer appears first.
-            ->paginate(10)  //This returns only 10 lecturers per page.
-            ->withQueryString();   //Without withQueryString(), the search value may be removed from generated pagination links.
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($lecturerQuery) use ($search) {
+                    $lecturerQuery
+                        ->where(
+                            'lecturer_number',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'first_name',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'last_name',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'email',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'department',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'specialization',
+                            'like',
+                            "%{$search}%"
+                        );
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return LecturerResource::collection($lecturers);
     }
 
     /**
-     * Create a lecturer.
+     * Create a lecturer and login account.
      */
-    public function store(StoreLecturerRequest $request): JsonResponse {
+    public function store(
+        StoreLecturerRequest $request
+    ): JsonResponse {
         $uploadedImage = null;
 
         try {
-            $validated = $request->validated();
+            $lecturer = DB::transaction(function () use (
+                $request,
+                &$uploadedImage
+            ) {
+                $validated = $request->validated();
 
-            if ($request->hasFile('profile_image')) {
-                $uploadedImage = $request
-                    ->file('profile_image')
-                    ->store(
-                        'lecturers/profile-images',
-                        'public'
-                    );
+                if ($request->hasFile('profile_image')) {
+                    $uploadedImage = $request
+                        ->file('profile_image')
+                        ->store(
+                            'lecturers/profile-images',
+                            'public'
+                        );
 
-                $validated['profile_image'] =
-                    $uploadedImage;
-            }else {
+                    $validated['profile_image'] =
+                        $uploadedImage;
+                } else {
+                    $validated['profile_image'] =
+                        'lecturers/profile-images/default-avatar.png';
+                }
 
-                $validated['profile_image'] = 'students/profile-images/default-avatar.png';
+                $user = User::create([
+                    'name' => $validated['first_name']
+                        . ' '
+                        . $validated['last_name'],
 
-            }
+                    'email' => $validated['email'],
+                    'password' => $validated['password'],
+                    'role' => 'lecturer',
+                    'status' => $validated['status'],
+                ]);
 
-            $lecturer = DB::transaction(
-                fn () => Lecturer::create($validated)
-            );
+                unset($validated['password']);
+
+                $validated['user_id'] = $user->id;
+
+                return Lecturer::create($validated);
+            });
 
             return response()->json([
                 'success' => true,
-                'message' =>
-                    'Lecturer created successfully.',
-                'data' =>
-                    new LecturerResource($lecturer), //This converts the created lecturer into the format defined by LecturerResource.
+                'message' => 'Lecturer created successfully.',
+                'data' => new LecturerResource($lecturer),
             ], 201);
         } catch (Throwable $exception) {
             if (
-                $uploadedImage !== null &&   //Delete uploaded image when creation fails
-                Storage::disk('public')
-                    ->exists($uploadedImage)
+                $uploadedImage !== null &&
+                Storage::disk('public')->exists($uploadedImage)
             ) {
-                Storage::disk('public')
-                    ->delete($uploadedImage);  // Without this deletion, unused images would remain in storage.
+                Storage::disk('public')->delete($uploadedImage);
             }
 
-            report($exception);   //This reports the error to Laravel's logging system.
+            report($exception);
 
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to create the lecturer.',
+                'message' => 'Unable to create the lecturer.',
             ], 500);
         }
     }
@@ -127,23 +139,26 @@ class LecturerController extends Controller
     /**
      * Display one lecturer.
      */
-    public function show(Lecturer $lecturer): JsonResponse {
+    public function show(Lecturer $lecturer): JsonResponse
+    {
         return response()->json([
             'success' => true,
-            'data' =>
-                new LecturerResource($lecturer),
+            'data' => new LecturerResource($lecturer),
         ]);
     }
 
     /**
-     * Update a lecturer.
+     * Update lecturer profile and login account.
      */
-    public function update(UpdateLecturerRequest $request, Lecturer $lecturer): JsonResponse {
+    public function update(
+        UpdateLecturerRequest $request,
+        Lecturer $lecturer
+    ): JsonResponse {
         $oldImage = $lecturer->profile_image;
         $newImage = null;
 
         try {
-            $validated = $request->validated();  //This retrieves the fields that passed the update validation rules.
+            $validated = $request->validated();
 
             if ($request->hasFile('profile_image')) {
                 $newImage = $request
@@ -153,54 +168,70 @@ class LecturerController extends Controller
                         'public'
                     );
 
-                $validated['profile_image'] =
-                    $newImage;
+                $validated['profile_image'] = $newImage;
             }
 
-            DB::transaction(function () use ($lecturer, $validated) {
+            DB::transaction(function () use (
+                $lecturer,
+                $validated
+            ) {
+                $userData = [
+                    'name' => $validated['first_name']
+                        . ' '
+                        . $validated['last_name'],
+
+                    'email' => $validated['email'],
+                    'status' => $validated['status'],
+                ];
+
+                if (!empty($validated['password'])) {
+                    $userData['password'] =
+                        $validated['password'];
+                }
+
+                $lecturer->user->update($userData);
+
+                unset($validated['password']);
+
                 $lecturer->update($validated);
             });
 
             if (
                 $newImage !== null &&
                 $oldImage !== null &&
-                Storage::disk('public')
-                    ->exists($oldImage)
+                $oldImage !==
+                'lecturers/profile-images/default-avatar.png' &&
+                Storage::disk('public')->exists($oldImage)
             ) {
-                Storage::disk('public')
-                    ->delete($oldImage);
+                Storage::disk('public')->delete($oldImage);
             }
 
             return response()->json([
                 'success' => true,
-                'message' =>
-                    'Lecturer updated successfully.',
+                'message' => 'Lecturer updated successfully.',
                 'data' => new LecturerResource(
-                    $lecturer->fresh()  //Without fresh(), the model may not include some database-generated or automatically modified values.
+                    $lecturer->fresh()
                 ),
             ]);
         } catch (Throwable $exception) {
             if (
                 $newImage !== null &&
-                Storage::disk('public')
-                    ->exists($newImage)
+                Storage::disk('public')->exists($newImage)
             ) {
-                Storage::disk('public')
-                    ->delete($newImage);
+                Storage::disk('public')->delete($newImage);
             }
 
             report($exception);
 
-            return response()->json([  //This sends a server-error response to the frontend.
+            return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to update the lecturer.',
+                'message' => 'Unable to update the lecturer.',
             ], 500);
         }
     }
 
     /**
-     * Delete a lecturer and their profile image.
+     * Delete lecturer and linked login account.
      */
     public function destroy(
         Lecturer $lecturer
@@ -209,30 +240,28 @@ class LecturerController extends Controller
             $imagePath = $lecturer->profile_image;
 
             DB::transaction(function () use ($lecturer) {
-                $lecturer->delete();
+                $lecturer->user->delete();
             });
 
             if (
                 $imagePath !== null &&
-                Storage::disk('public')
-                    ->exists($imagePath)
+                $imagePath !==
+                'lecturers/profile-images/default-avatar.png' &&
+                Storage::disk('public')->exists($imagePath)
             ) {
-                Storage::disk('public')
-                    ->delete($imagePath);
+                Storage::disk('public')->delete($imagePath);
             }
 
             return response()->json([
                 'success' => true,
-                'message' =>
-                    'Lecturer deleted successfully.',
+                'message' => 'Lecturer deleted successfully.',
             ]);
         } catch (Throwable $exception) {
             report($exception);
 
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to delete the lecturer.',
+                'message' => 'Unable to delete the lecturer.',
             ], 500);
         }
     }

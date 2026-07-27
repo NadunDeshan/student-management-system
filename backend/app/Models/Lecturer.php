@@ -10,6 +10,7 @@ class Lecturer extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'lecturer_number',
         'first_name',
         'last_name',
@@ -28,5 +29,10 @@ class Lecturer extends Model
         return [
             'hire_date' => 'date',
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

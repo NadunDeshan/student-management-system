@@ -9,10 +9,8 @@ class Student extends Model
 {
     use HasFactory;
 
-    /**
-     * Fields that may be inserted or updated using mass assignment.
-     */
     protected $fillable = [
+        'user_id',
         'student_number',
         'first_name',
         'last_name',
@@ -27,14 +25,16 @@ class Student extends Model
         'status',
     ];
 
-    /**
-     * Convert database values into appropriate PHP types.
-     */
     protected function casts(): array
     {
         return [
             'date_of_birth' => 'date',
             'enrollment_date' => 'date',
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

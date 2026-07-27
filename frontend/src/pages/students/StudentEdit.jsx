@@ -34,6 +34,9 @@ function StudentEdit() {
                     first_name: student.first_name ?? '',
                     last_name: student.last_name ?? '',
                     email: student.email ?? '',
+
+                    password: '',
+
                     phone_number:
                         student.phone_number ?? '',
                     date_of_birth:
@@ -107,7 +110,7 @@ function StudentEdit() {
                 icon: "success",
                 title: "The student was updated successfully.",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 background: "rgb(135 227 169)",
                 color: "#1f2937",

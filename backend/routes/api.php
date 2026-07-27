@@ -1,9 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\LecturerController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\StudentController;
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Test route
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/test', function () {
     return response()->json([
@@ -11,24 +17,34 @@ Route::get('/test', function () {
         'message' => 'Laravel API is working',
     ]);
 });
-/*
-| Student CRUD routes
-*/
-Route::apiResource('students', StudentController::class);
-/*
-| Lecture CRUD routes
-*/
-Route::apiResource('lecturers', LecturerController::class);
-
 
 /*
 |--------------------------------------------------------------------------
-| Authenticated user route
+| Public route
 |--------------------------------------------------------------------------
 |
-| Authentication will be implemented later.
+| Users do not need a token to access login.
 |
 */
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+Route::post('/login', [AuthController::class, 'login']);
+
+/*
+|--------------------------------------------------------------------------
+| Protected routes
+|--------------------------------------------------------------------------
+|
+| A valid Sanctum token is required.
+|
+*/
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::middleware('role:admin')->group(function () {
+        Route::apiResource('students', StudentController::class);
+        Route::apiResource('lecturers', LecturerController::class);
+    });
+});

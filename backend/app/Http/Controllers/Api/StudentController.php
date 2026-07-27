@@ -7,6 +7,7 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,12 +16,6 @@ use Throwable;
 
 class StudentController extends Controller
 {
-    /**
-     * Display students with search and pagination.
-     *
-     * Example:
-     * GET /api/students?search=nimal
-     */
     public function index(Request $request)
     {
         $search = trim((string) $request->query('search', ''));
@@ -43,29 +38,46 @@ class StudentController extends Controller
         return StudentResource::collection($students);
     }
 
-    /**
-     * Store a newly created student.
-     */
     public function store(
         StoreStudentRequest $request
     ): JsonResponse {
+        $uploadedImage = null;
+
         try {
-            $student = DB::transaction(function () use ($request) {
+            $student = DB::transaction(function () use (
+                $request,
+                &$uploadedImage
+            ) {
                 $validated = $request->validated();
 
                 if ($request->hasFile('profile_image')) {
-                    $validated['profile_image'] = $request
+                    $uploadedImage = $request
                         ->file('profile_image')
                         ->store(
                             'students/profile-images',
                             'public'
                         );
 
-                }else {
-
-                    $validated['profile_image'] = 'students/profile-images/default-avatar.png';
-
+                    $validated['profile_image'] = $uploadedImage;
+                } else {
+                    $validated['profile_image'] =
+                        'students/profile-images/default-avatar.png';
                 }
+
+                $user = User::create([
+                    'name' => $validated['first_name']
+                        . ' '
+                        . $validated['last_name'],
+
+                    'email' => $validated['email'],
+                    'password' => $validated['password'],
+                    'role' => 'student',
+                    'status' => $validated['status'],
+                ]);
+
+                unset($validated['password']);
+
+                $validated['user_id'] = $user->id;
 
                 return Student::create($validated);
             });
@@ -76,6 +88,13 @@ class StudentController extends Controller
                 'data' => new StudentResource($student),
             ], 201);
         } catch (Throwable $exception) {
+            if (
+                $uploadedImage !== null &&
+                Storage::disk('public')->exists($uploadedImage)
+            ) {
+                Storage::disk('public')->delete($uploadedImage);
+            }
+
             report($exception);
 
             return response()->json([
@@ -85,12 +104,6 @@ class StudentController extends Controller
         }
     }
 
-    /**
-     * Display one student.
-     *
-     * Route model binding automatically returns 404
-     * when the student ID does not exist.
-     */
     public function show(Student $student): JsonResponse
     {
         return response()->json([
@@ -99,9 +112,6 @@ class StudentController extends Controller
         ]);
     }
 
-    /**
-     * Update an existing student.
-     */
     public function update(
         UpdateStudentRequest $request,
         Student $student
@@ -127,16 +137,31 @@ class StudentController extends Controller
                 $student,
                 $validated
             ) {
+                $userData = [
+                    'name' => $validated['first_name']
+                        . ' '
+                        . $validated['last_name'],
+
+                    'email' => $validated['email'],
+                    'status' => $validated['status'],
+                ];
+
+                if (!empty($validated['password'])) {
+                    $userData['password'] = $validated['password'];
+                }
+
+                $student->user->update($userData);
+
+                unset($validated['password']);
+
                 $student->update($validated);
             });
 
-            /*
-             * Delete the previous image only after the
-             * database update completes successfully.
-             */
             if (
                 $newImage !== null &&
                 $oldImage !== null &&
+                $oldImage !==
+                'students/profile-images/default-avatar.png' &&
                 Storage::disk('public')->exists($oldImage)
             ) {
                 Storage::disk('public')->delete($oldImage);
@@ -150,9 +175,6 @@ class StudentController extends Controller
                 ),
             ]);
         } catch (Throwable $exception) {
-            /*
-             * Remove the new image if the database update failed.
-             */
             if (
                 $newImage !== null &&
                 Storage::disk('public')->exists($newImage)
@@ -169,20 +191,19 @@ class StudentController extends Controller
         }
     }
 
-    /**
-     * Delete a student and their profile image.
-     */
     public function destroy(Student $student): JsonResponse
     {
         try {
             $imagePath = $student->profile_image;
 
             DB::transaction(function () use ($student) {
-                $student->delete();
+                $student->user->delete();
             });
 
             if (
                 $imagePath !== null &&
+                $imagePath !==
+                'students/profile-images/default-avatar.png' &&
                 Storage::disk('public')->exists($imagePath)
             ) {
                 Storage::disk('public')->delete($imagePath);
@@ -190,7 +211,7 @@ class StudentController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Student Deleted successfully.',
+                'message' => 'Student deleted successfully.',
             ]);
         } catch (Throwable $exception) {
             report($exception);

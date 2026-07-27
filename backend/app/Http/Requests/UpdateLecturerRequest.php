@@ -21,10 +21,8 @@ class UpdateLecturerRequest extends FormRequest
                 'required',
                 'string',
                 'max:50',
-                Rule::unique(
-                    'lecturers',
-                    'lecturer_number'
-                )->ignore($lecturer),  //Check all lecturers except the lecturer currently being updated.
+                Rule::unique('lecturers', 'lecturer_number')
+                    ->ignore($lecturer),
             ],
 
             'first_name' => [
@@ -43,10 +41,14 @@ class UpdateLecturerRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique(
-                    'lecturers',
-                    'email'
-                )->ignore($lecturer),
+                Rule::unique('users', 'email')
+                    ->ignore($lecturer->user_id),
+            ],
+
+            'password' => [
+                'nullable',
+                'string',
+                'min:8',
             ],
 
             'phone_number' => [
@@ -100,7 +102,10 @@ class UpdateLecturerRequest extends FormRequest
                 'This lecturer number belongs to another lecturer.',
 
             'email.unique' =>
-                'This email address belongs to another lecturer.',
+                'This email address belongs to another account.',
+
+            'password.min' =>
+                'The password must contain at least 8 characters.',
 
             'hire_date.before_or_equal' =>
                 'The hire date cannot be in the future.',

@@ -7,17 +7,11 @@ use Illuminate\Validation\Rule;
 
 class UpdateStudentRequest extends FormRequest
 {
-    /**
-     * Allow this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Validation rules for updating a student.
-     */
     public function rules(): array
     {
         $student = $this->route('student');
@@ -47,8 +41,14 @@ class UpdateStudentRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('students', 'email')
-                    ->ignore($student),
+                Rule::unique('users', 'email')
+                    ->ignore($student->user_id),
+            ],
+
+            'password' => [
+                'nullable',
+                'string',
+                'min:8',
             ],
 
             'phone_number' => [
@@ -109,7 +109,10 @@ class UpdateStudentRequest extends FormRequest
                 'This student number belongs to another student.',
 
             'email.unique' =>
-                'This email address belongs to another student.',
+                'This email address belongs to another account.',
+
+            'password.min' =>
+                'The password must contain at least 8 characters.',
 
             'date_of_birth.before' =>
                 'The date of birth must be before today.',

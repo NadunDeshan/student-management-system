@@ -43,7 +43,12 @@ class StoreLecturerRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                'unique:lecturers,email',
+                'unique:users,email',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
             ],
 
             'phone_number' => [
@@ -101,6 +106,12 @@ class StoreLecturerRequest extends FormRequest
 
             'email.unique' =>
                 'This email address is already registered.',
+
+            'password.required' =>
+                'The password is required.',
+
+            'password.min' =>
+                'The password must contain at least 8 characters.',
 
             'hire_date.before_or_equal' =>
                 'The hire date cannot be in the future.',

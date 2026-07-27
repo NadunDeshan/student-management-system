@@ -167,6 +167,30 @@ function StudentForm({
                         {fieldError('email')}
                     </div>
                 </div>
+                <div className="col-md-6">
+                    <label className="form-label">
+                        Password
+                        <span className="required-mark"> *</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        className={`form-control ${
+                            fieldError('password')
+                                ? 'is-invalid'
+                                : ''
+                        }`}
+                        value={formData.password ?? ''}
+                        onChange={handleChange}
+                        placeholder="Enter login password"
+                        autoComplete="new-password"
+                    />
+
+                    <div className="invalid-feedback">
+                        {fieldError('password')}
+                    </div>
+                </div>
 
                 <div className="col-md-6">
                     <label className="form-label">

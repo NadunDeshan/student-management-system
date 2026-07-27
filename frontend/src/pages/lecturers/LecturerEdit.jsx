@@ -61,6 +61,8 @@ function LecturerEdit() {
                     email:
                         lecturer.email ?? '',
 
+                    password: '',
+
                     phone_number:
                         lecturer.phone_number ?? '',
 
@@ -162,6 +164,9 @@ function LecturerEdit() {
 
                 return;
             }
+            if (key === 'password' && value === '') {
+                return;
+            }
 
             data.append(key, value ?? '');
         });
@@ -197,7 +202,7 @@ function LecturerEdit() {
                 toast: true,
                 position: "top-end",
                 icon: "success",
-                title: "The lecturer was created successfully.",
+                title: "The lecturer was updated successfully.",
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,

@@ -6,19 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStudentRequest extends FormRequest
 {
-    /**
-     * Allow this request.
-     *
-     * Authentication and admin authorization will be added later.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Validation rules for creating a student.
-     */
     public function rules(): array
     {
         return [
@@ -45,7 +37,13 @@ class StoreStudentRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                'unique:students,email',
+                'unique:users,email',
+            ],
+
+            'password' => [
+                'required',
+                'string',
+                'min:8',
             ],
 
             'phone_number' => [
@@ -96,9 +94,6 @@ class StoreStudentRequest extends FormRequest
         ];
     }
 
-    /**
-     * Beginner-friendly validation messages.
-     */
     public function messages(): array
     {
         return [
@@ -109,7 +104,7 @@ class StoreStudentRequest extends FormRequest
                 'This student number is already registered.',
 
             'email.unique' =>
-                'This email address is already registered.',
+                'This email address is already used by another account.',
 
             'date_of_birth.before' =>
                 'The date of birth must be before today.',
@@ -122,6 +117,12 @@ class StoreStudentRequest extends FormRequest
 
             'profile_image.max' =>
                 'The profile image must not be larger than 2 MB.',
+
+            'password.required' =>
+                'The password is required.',
+
+            'password.min' =>
+                'The password must contain at least 8 characters.',
         ];
     }
 }

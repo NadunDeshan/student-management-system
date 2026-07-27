@@ -1,6 +1,32 @@
-import { FaBell } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from '../api/axios';
+import { FaBell, FaSignOutAlt } from 'react-icons/fa';
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+    const handleLogout = async () => {
+        try {
+            await axios.post('/logout');
+        } catch (error) {
+            console.error(error);
+        } finally {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+
+            navigate('/login');
+        }
+    };
     return (
         <header className="admin-navbar">
             <div>
@@ -25,11 +51,23 @@ function Navbar() {
                 <div className="admin-avatar">AD</div>
 
                 <div className="d-none d-md-block">
-                    <strong>Administrator</strong>
-                    <div className="small stext"  >
-                        <span>System Admin</span>
+                    <strong>{user?.name ?? 'User'}</strong>
+
+                    <div className="small stext">
+                        <span>
+                            {user?.role?.charAt(0).toUpperCase() +
+                                user?.role?.slice(1)}
+                        </span>
                     </div>
                 </div>
+                <button
+                    type="button"
+                    className="btn btn-danger ms-3"
+                    onClick={handleLogout}
+                >
+                    <FaSignOutAlt className="me-2" />
+                    Logout
+                </button>
             </div>
         </header>
     );

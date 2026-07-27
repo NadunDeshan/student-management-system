@@ -11,6 +11,7 @@ const initialFormData = {
     first_name: '',
     last_name: '',
     email: '',
+    password: '',
     phone_number: '',
     address: '',
     department: '',
@@ -128,7 +129,7 @@ function LecturerCreate() {
                 icon: "success",
                 title: "The lecturer was created successfully",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 background: "rgb(135 227 169)",
                 color: "#1f2937",
@@ -150,11 +151,19 @@ function LecturerCreate() {
                 requestError.response?.data?.message ??
                 'Unable to create the lecturer.';
 
-            Swal.fire(
-                'Creation failed',
-                message,
-                'error'
-            );
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Unable to create the Lecturer.",
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                background: "#fee2e2",
+                color: "#7f1d1d",
+                iconColor: "#dc2626",
+                width: "350px",
+        });
 
         } finally {
             setSubmitting(false);
