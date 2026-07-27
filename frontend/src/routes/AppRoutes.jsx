@@ -9,6 +9,8 @@ import ComingSoon from '../pages/ComingSoon';
 import Login from '../pages/Login';
 
 import AdminDashboard from '../pages/dashboard/AdminDashboard';
+import StudentDashboard from '../pages/dashboard/StudentDashboard';
+import LecturerDashboard from '../pages/dashboard/LecturerDashboard';
 
 import StudentCreate from '../pages/students/StudentCreate';
 import StudentDetails from '../pages/students/StudentDetails';
@@ -176,38 +178,87 @@ function AppRoutes() {
             </Route>
 
             <Route
-                path="/student/dashboard"
+                path="/student"
                 element={
                     <RoleRoute allowedRole="student">
-                        <div className="container py-5">
-                            <h1 className="page-title">
-                                Student Dashboard
-                            </h1>
-
-                            <p className="page-subtitle">
-                                Student dashboard will be created next.
-                            </p>
-                        </div>
+                        <AdminLayout />
                     </RoleRoute>
                 }
-            />
+            >
+                <Route
+                    index
+                    element={
+                        <Navigate
+                            to="/student/dashboard"
+                            replace
+                        />
+                    }
+                />
+
+                <Route
+                    path="dashboard"
+                    element={<StudentDashboard />}
+                />
+
+                <Route
+                    path="profile"
+                    element={<ComingSoon title="My Profile" />}
+                />
+
+                <Route
+                    path="subjects"
+                    element={<ComingSoon title="My Subjects" />}
+                />
+
+                <Route
+                    path="exams"
+                    element={<ComingSoon title="My Exams" />}
+                />
+            </Route>
 
             <Route
-                path="/lecturer/dashboard"
+                path="/lecturer"
                 element={
                     <RoleRoute allowedRole="lecturer">
-                        <div className="container py-5">
-                            <h1 className="page-title">
-                                Lecturer Dashboard
-                            </h1>
-
-                            <p className="page-subtitle">
-                                Lecturer dashboard will be created next.
-                            </p>
-                        </div>
+                        <AdminLayout />
                     </RoleRoute>
                 }
-            />
+            >
+                <Route
+                    index
+                    element={
+                        <Navigate
+                            to="/lecturer/dashboard"
+                            replace
+                        />
+                    }
+                />
+
+                <Route
+                    path="dashboard"
+                    element={<LecturerDashboard />}
+                />
+
+                <Route
+                    path="profile"
+                    element={<ComingSoon title="My Profile" />}
+                />
+
+                <Route
+                    path="subjects"
+                    element={<ComingSoon title="My Subjects" />}
+                />
+
+                <Route
+                    path="students"
+                    element={<ComingSoon title="My Students" />}
+                />
+
+                <Route
+                    path="exams"
+                    element={<ComingSoon title="Examinations" />}
+                />
+            </Route>
 
             <Route
                 path="*"

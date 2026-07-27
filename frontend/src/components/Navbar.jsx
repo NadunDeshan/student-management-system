@@ -48,7 +48,22 @@ function Navbar() {
                     <FaBell />
                 </button>
 
-                <div className="admin-avatar">AD</div>
+                <div className="admin-avatar">
+                    {user?.avatar ? (
+                        <img
+                            src={user.avatar}
+                            alt={user.name || 'Profile'}
+                            className="admin-avatar-img"
+                        />
+                    ) : (
+                        user?.name
+                            ?.split(' ')
+                            .map((word) => word[0])
+                            .join('')
+                            .slice(0, 2)
+                            .toUpperCase() || 'US'
+                    )}
+                </div>
 
                 <div className="d-none d-md-block">
                     <strong>{user?.name ?? 'User'}</strong>

@@ -1,72 +1,142 @@
-import {NavLink} from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+
 import {
     FaBook,
     FaChalkboardTeacher,
     FaClipboardList,
     FaGraduationCap,
+    FaIdCard,
     FaTachometerAlt,
     FaUserGraduate,
+    FaUsers,
 } from 'react-icons/fa';
 
 function Sidebar() {
+    const location = useLocation();
+
+    let portal = 'student';
+
+    if (location.pathname.startsWith('/admin')) {
+        portal = 'admin';
+    } else if (location.pathname.startsWith('/lecturer')) {
+        portal = 'lecturer';
+    }
+
+    const menuItems = {
+        admin: [
+            {
+                path: '/admin/dashboard',
+                label: 'Dashboard',
+                icon: <FaTachometerAlt />,
+            },
+            {
+                path: '/admin/students',
+                label: 'Students',
+                icon: <FaUserGraduate />,
+            },
+            {
+                path: '/admin/lecturers',
+                label: 'Lecturers',
+                icon: <FaChalkboardTeacher />,
+            },
+            {
+                path: '/admin/subjects',
+                label: 'Subjects',
+                icon: <FaBook />,
+            },
+            {
+                path: '/admin/exams',
+                label: 'Exams',
+                icon: <FaClipboardList />,
+            },
+        ],
+
+        student: [
+            {
+                path: '/student/dashboard',
+                label: 'Dashboard',
+                icon: <FaTachometerAlt />,
+            },
+            {
+                path: '/student/profile',
+                label: 'My Profile',
+                icon: <FaIdCard />,
+            },
+            {
+                path: '/student/subjects',
+                label: 'My Subjects',
+                icon: <FaBook />,
+            },
+            {
+                path: '/student/exams',
+                label: 'My Exams',
+                icon: <FaClipboardList />,
+            },
+        ],
+
+        lecturer: [
+            {
+                path: '/lecturer/dashboard',
+                label: 'Dashboard',
+                icon: <FaTachometerAlt />,
+            },
+            {
+                path: '/lecturer/profile',
+                label: 'My Profile',
+                icon: <FaIdCard />,
+            },
+            {
+                path: '/lecturer/subjects',
+                label: 'My Subjects',
+                icon: <FaBook />,
+            },
+            {
+                path: '/lecturer/students',
+                label: 'My Students',
+                icon: <FaUsers />,
+            },
+            {
+                path: '/lecturer/exams',
+                label: 'Examinations',
+                icon: <FaClipboardList />,
+            },
+        ],
+    };
+
+    const panelNames = {
+        admin: 'Admin Panel',
+        student: 'Student Panel',
+        lecturer: 'Lecturer Panel',
+    };
+
     return (
         <aside className="admin-sidebar">
             <div className="sidebar-brand">
                 <div className="sidebar-brand-icon">
-                    <FaGraduationCap/>
+                    <FaGraduationCap />
                 </div>
 
                 <div>
                     <h4>WELCOME TO SMS</h4>
-                    {/*<h4>SMS Portal</h4>*/}
-                    <small>Admin Panel</small>
+                    <small>{panelNames[portal]}</small>
                 </div>
             </div>
 
-            <p className="sidebar-menu-title">Main menu</p>
+            <p className="sidebar-menu-title">
+                Main menu
+            </p>
 
             <nav className="sidebar-menu">
-                <NavLink
-                    to="/admin/dashboard"
-                    className="sidebar-link"
-                >
-                    <FaTachometerAlt/>
-                    <span>Dashboard</span>
-                </NavLink>
-
-                <NavLink
-                    to="/admin/students"
-                    className="sidebar-link"
-                >
-                    <FaUserGraduate/>
-                    <span>Students</span>
-                </NavLink>
-
-
-                <NavLink
-                    to="/admin/lecturers"
-                    className="sidebar-link"
-                >
-                    <FaChalkboardTeacher/>
-                    <span>Lecturers</span>
-                </NavLink>
-
-                <NavLink
-                    to="/admin/subjects"
-                    className="sidebar-link"
-                >
-                    <FaBook/>
-                    <span>Subjects</span>
-                </NavLink>
-
-                <NavLink
-                    to="/admin/exams"
-                    className="sidebar-link"
-                >
-                    <FaClipboardList/>
-                    <span>Exams</span>
-                </NavLink>
-
+                {menuItems[portal].map((item) => (
+                    <NavLink
+                        key={item.path}
+                        to={item.path}
+                        className="sidebar-link"
+                    >
+                        {item.icon}
+                        <span>{item.label}</span>
+                    </NavLink>
+                ))}
             </nav>
         </aside>
     );
