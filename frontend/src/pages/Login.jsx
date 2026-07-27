@@ -54,7 +54,7 @@ function Login() {
 
     return (
         <div className="login-page">
-            <div className="login-card">
+            <div className="login-card ">
                 <div className="login-brand">
                     <div className="login-brand-icon">
                         SMS
