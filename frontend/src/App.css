@@ -331,13 +331,17 @@ a {
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background:
-            radial-gradient(
-                    circle at top left,
-                    rgba(110, 175, 218, 0.22),
-                    transparent 38%
-            ),
-            linear-gradient(150deg, #155d9a, #0c2723);
+    background-image: url("./assets/images/bg.png");
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
+    /*background:*/
+    /*        radial-gradient(*/
+    /*                circle at top left,*/
+    /*                rgba(110, 175, 218, 0.22),*/
+    /*                transparent 38%*/
+    /*        ),*/
+    /*        linear-gradient(150deg, #155d9a, #0c2723);*/
 }
 
 .login-card {
@@ -345,17 +349,17 @@ a {
     display: grid;
     justify-content: center;
     max-width: 460px;
+    background: rgba(0, 0, 0, 0.2);
     padding: 34px;
     border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 22px;
-    background: rgba(9, 39, 66, 0.9);
     color: white;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(1px);
 }
 
 .login-brand {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     gap: 14px;
@@ -374,9 +378,9 @@ a {
     font-size: 16px;
     font-weight: 800;
     letter-spacing: 1px;
+    margin-bottom: 10px;
 }
-
-.login-brand h1 {
+.login-brand {
     margin: 0;
     font-size: 19px;
     font-weight: 700;
@@ -387,20 +391,19 @@ a {
     color: #b8d8d0;
     font-size: 13px;
 }
-
-.login-heading {
+.login-heading p {
+    display: grid;
+    justify-content: center;
     margin-bottom: 25px;
+    color: #d8dbe3;
 }
 
 .login-heading h2 {
+    display: grid;
+    justify-content: center;
     margin: 0 0 7px;
     font-size: 29px;
     font-weight: 700;
-}
-
-.login-heading p {
-    margin: 0;
-    color: #d8dbe3;
 }
 
 .login-input {

@@ -59,9 +59,10 @@ function Login() {
                     <div className="login-brand-icon">
                         SMS
                     </div>
-
+                </div>
+                <div className="login-heading">
                     <div>
-                        <h1>Student Management</h1>
+                        <h2>Student Management</h2>
                         <p>Secure system access</p>
                     </div>
                 </div>
