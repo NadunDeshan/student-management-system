@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\LecturerController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\StudentProfileController;
+use App\Http\Controllers\Api\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('students', StudentController::class);
         Route::apiResource('lecturers', LecturerController::class);
+        Route::apiResource('subjects', SubjectController::class);
         Route::get('/admin/dashboard/statistics', [AdminDashboardController::class, 'statistics']
         );
     });

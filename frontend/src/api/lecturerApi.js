@@ -1,6 +1,7 @@
 import api from './axios';
 
 export const getLecturers = async (search = '', page = 1) => {
+    
     const response = await api.get('/lecturers', {
         params: {
             search,

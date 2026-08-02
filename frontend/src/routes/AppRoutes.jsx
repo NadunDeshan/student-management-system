@@ -23,6 +23,11 @@ import LecturerCreate from '../pages/lecturers/LecturerCreate';
 import LecturerEdit from '../pages/lecturers/LecturerEdit';
 import LecturerDetails from '../pages/lecturers/LecturerDetails';
 
+import SubjectList from '../pages/subjects/SubjectList';
+import SubjectCreate from '../pages/subjects/SubjectCreate';
+import SubjectDetails from '../pages/subjects/SubjectDetails';
+import SubjectEdit from '../pages/subjects/SubjectEdit';
+
 function getCurrentUser() {
     const savedUser = localStorage.getItem('user');
 
@@ -101,15 +106,23 @@ function AppRoutes() {
                 <RoleRoute allowedRole="admin"><AdminLayout /></RoleRoute>}>
                 <Route index element={<Navigate to="/admin/dashboard" replace/>}/>
                 <Route path="dashboard" element={<AdminDashboard />}/>
+
                 <Route path="students" element={<StudentList />}/>
                 <Route path="students/create" element={<StudentCreate />}/>
                 <Route path="students/:id" element={<StudentDetails />}/>
                 <Route path="students/:id/edit" element={<StudentEdit />}/>
+
                 <Route path="lecturers" element={<LecturerList />}/>
                 <Route path="lecturers/create" element={<LecturerCreate />}/>
                 <Route path="lecturers/:id" element={<LecturerDetails />}/>
                 <Route path="lecturers/:id/edit" element={<LecturerEdit />}/>
-                <Route path="subjects" element={<ComingSoon title="Subjects" />}/>
+
+                <Route path="subjects" element={<SubjectList />}/>
+                <Route path="subjects/create" element={<SubjectCreate />}/>
+                <Route path="subjects/:id" element={<SubjectDetails />}/>
+                <Route path="subjects/:id/edit" element={<SubjectEdit />}/>
+
+                
                 <Route path="exams" element={<ComingSoon title="Exams" />}/>
             </Route>
 
