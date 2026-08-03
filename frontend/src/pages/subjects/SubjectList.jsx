@@ -197,7 +197,7 @@ function SubjectList() {
                         <strong>{subject.subject_code}</strong>
                       </td>
 
-                      <td>{subject.subject_name}</td>
+                      <td><strong>{subject.subject_name}</strong></td>
 
                       <td>{subject.lecturer?.full_name ?? "-"}</td>
                       <td>

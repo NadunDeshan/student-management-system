@@ -17,6 +17,7 @@ class SubjectResource extends JsonResource
             'description' => $this->description,
             'credits' => $this->credits,
             'semester' => $this->semester,
+            'students_count' => $this->whenCounted('students'),
 
             'lecturer_id' => $this->lecturer_id,
 

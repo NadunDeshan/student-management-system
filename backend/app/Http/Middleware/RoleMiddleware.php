@@ -11,14 +11,18 @@ class RoleMiddleware
     public function handle(
         Request $request,
         Closure $next,
-        string $role
+        string ...$roles
     ): Response {
         $user = $request->user();
 
-        if (!$user || $user->role !== $role) {
+        if (
+            !$user ||
+            !in_array($user->role, $roles, true)
+        ) {
             return response()->json([
                 'success' => false,
-                'message' => 'You are not allowed to access this page.',
+                'message' =>
+                    'You are not allowed to access this page.',
             ], 403);
         }
 

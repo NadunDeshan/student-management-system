@@ -39,3 +39,32 @@ export const deleteStudent = async (id) => {
 
     return response.data;
 };
+
+/**
+ * Get one student with all available subjects
+ * and their currently registered subject IDs.
+ */
+export async function getStudentSubjects(studentId) {
+    const response = await api.get(
+        `/students/${studentId}/subjects`
+    );
+
+    return response.data;
+}
+
+/**
+ * Update the subjects registered to one student.
+ */
+export async function updateStudentSubjects(
+    studentId,
+    subjectIds
+) {
+    const response = await api.put(
+        `/students/${studentId}/subjects`,
+        {
+            subject_ids: subjectIds,
+        }
+    );
+
+    return response.data;
+}

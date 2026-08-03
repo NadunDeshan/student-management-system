@@ -22,4 +22,14 @@ class Subject extends Model
     {
         return $this->belongsTo(Lecturer::class);
     }
+    public function students()
+    {
+        return $this->belongsToMany(Student::class,'student_subject')
+        ->withPivot('registered_at')
+            ->withTimestamps();
+    }
+    public function assessments()
+{
+    return $this->hasMany(Assessment::class);
+}
 }

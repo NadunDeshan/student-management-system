@@ -6,6 +6,11 @@ use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\StudentProfileController;
 use App\Http\Controllers\Api\SubjectController;
+use App\Http\Controllers\Api\StudentSubjectController;
+use App\Http\Controllers\Api\StudentMySubjectController;
+use App\Http\Controllers\Api\LecturerMySubjectController;
+use App\Http\Controllers\Api\AssessmentController;
+use App\Http\Controllers\Api\StudentAssessmentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,10 +25,27 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('students', StudentController::class);
         Route::apiResource('lecturers', LecturerController::class);
         Route::apiResource('subjects', SubjectController::class);
-        Route::get('/admin/dashboard/statistics', [AdminDashboardController::class, 'statistics']
-        );
+        Route::get('/students/{student}/subjects', [StudentSubjectController::class, 'show']);
+        Route::put('/students/{student}/subjects', [StudentSubjectController::class, 'update']);
+
+        Route::get('/admin/dashboard/statistics', [AdminDashboardController::class, 'statistics']);
     });
+    /*
+     * Admin and lecturer assessment management
+     */
+    Route::middleware('role:admin,lecturer')->group(function () {
+        Route::apiResource('assessments', AssessmentController::class);
+    });
+
     Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
         Route::get('/student/profile', [StudentProfileController::class, 'show']);
+        Route::get('/student/subjects', [StudentMySubjectController::class, 'index']);
+        Route::get('/student/assessments',[StudentAssessmentController::class, 'index']);
+        Route::get( '/student/assessments/{assessment}',[StudentAssessmentController::class, 'show']);
+    });
+
+    Route::middleware(['auth:sanctum', 'role:lecturer',])->group(function () {
+        Route::get('/lecturer/subjects', [LecturerMySubjectController::class, 'index']);
+        Route::get('/lecturer/subjects/{subject}', [LecturerMySubjectController::class, 'show']);
     });
 });

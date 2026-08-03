@@ -693,7 +693,7 @@ a {
             transparent
     );
 }
-
+/*------------------------------------------------------------------*/
 .student-profile-section-heading {
     margin-bottom: 22px;
 }
@@ -759,7 +759,290 @@ a {
     font-weight: 650;
     word-break: break-word;
 }
+/* Student subject registration */
 
+.subject-selection-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+    min-height: 170px;
+    padding: 20px;
+    cursor: pointer;
+
+    border: 1px solid #647fae;
+    border-radius: 15px;
+    background: rgba(18, 46, 69, 0.88);
+    color: white;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.subject-selection-card:hover {
+    transform: translateY(-2px);
+    border-color: #6eafda;
+    background: rgba(25, 65, 96, 0.96);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.subject-selection-card.selected {
+    border-color: #71d9a3;
+    background: rgba(24, 112, 91, 0.32);
+    box-shadow: 0 0 0 2px rgba(113, 217, 163, 0.15);
+}
+
+.subject-selection-checkbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.subject-selection-icon {
+    display: grid;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+
+    border-radius: 13px;
+    background: #f6faf8;
+    color: #122e45;
+    font-size: 22px;
+}
+
+.subject-selection-content {
+    padding-right: 25px;
+}
+
+.subject-selection-content strong {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #91d8ff;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+}
+
+.subject-selection-content h5 {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.subject-selection-content p {
+    margin: 0 0 9px;
+    color: #d8dbe3;
+    font-size: 14px;
+}
+
+.subject-selection-content small {
+    color: #b8d8d0;
+}
+
+
+/* Student subject registration */
+/* Student My Subjects */
+
+.student-subject-card {
+    height: 100%;
+    padding: 22px;
+
+    border: 1px solid #647fae;
+    border-radius: 16px;
+
+    background: rgba(9, 39, 66, 0.92);
+    color: #ffffff;
+
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.student-subject-card:hover {
+    transform: translateY(-3px);
+    border-color: #6eafda;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+}
+
+.student-subject-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.student-subject-code {
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(110, 175, 218, 0.17);
+    border: 1px solid rgba(110, 175, 218, 0.45);
+
+    color: #9ed8ff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+}
+
+.student-subject-name {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.student-subject-description {
+    min-height: 48px;
+    margin-bottom: 20px;
+
+    color: #c9d6df;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.student-subject-meta {
+    display: grid;
+    gap: 11px;
+}
+
+.student-subject-meta > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #d8ebe6;
+    font-size: 14px;
+}
+
+.student-subject-meta svg {
+    color: #91d8ff;
+}
+
+.student-subject-department {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 7px 11px;
+
+    border-radius: 9px;
+
+    background: rgba(113, 217, 163, 0.14);
+    color: #9ce7bd;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.assessment-section-title {
+    margin-top: 8px;
+    padding: 12px 15px;
+
+    border-left: 4px solid #6eafda;
+    border-radius: 8px;
+
+    background: rgba(110, 175, 218, 0.12);
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* Student assessment cards */
+
+.student-assessment-card {
+    height: 100%;
+    padding: 22px;
+
+    border: 1px solid #647fae;
+    border-radius: 16px;
+
+    background: rgba(9, 39, 66, 0.92);
+    color: #ffffff;
+
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.student-assessment-card:hover {
+    transform: translateY(-3px);
+    border-color: #6eafda;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+}
+
+.student-assessment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+.student-assessment-title {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.student-assessment-subject {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 14px;
+
+    color: #91d8ff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.student-assessment-description {
+    min-height: 48px;
+    margin-bottom: 18px;
+
+    color: #c9d6df;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.student-assessment-meta {
+    display: grid;
+    gap: 10px;
+}
+
+.student-assessment-meta > div {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    color: #d8ebe6;
+    font-size: 13px;
+}
+
+.student-assessment-meta svg {
+    margin-top: 3px;
+    color: #91d8ff;
+}
 /* Tablet */
 
 @media (max-width: 768px) {
