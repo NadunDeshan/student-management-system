@@ -735,19 +735,30 @@ function StudentAssessmentDetails() {
         )}
 
         {assessment.type === "mcq" && (
-          <div className="col-12">
-            <div className="dashboard-panel">
-              <h4 className="mb-2">
-                MCQ Quiz
-              </h4>
+  <div className="col-12">
+    <div className="dashboard-panel">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div>
+          <h4 className="mb-1">
+            MCQ Quiz
+          </h4>
 
-              <p className="stext mb-0">
-                MCQ questions and quiz attempts will be
-                added in the next module.
-              </p>
-            </div>
-          </div>
-        )}
+          <p className="stext mb-0">
+            Start the quiz and submit your answers.
+            Only one attempt is allowed.
+          </p>
+        </div>
+
+        <Link
+          to={`/student/quizzes/${assessment.id}`}
+          className="btn btn-system"
+        >
+          Start Quiz
+        </Link>
+      </div>
+    </div>
+  </div>
+)}
       </div>
     </>
   );

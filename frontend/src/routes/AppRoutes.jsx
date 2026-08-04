@@ -35,9 +35,15 @@ import AssessmentDetails from "../pages/assessments/AssessmentDetails";
 import AssessmentEdit from "../pages/assessments/AssessmentEdit";
 import AssignmentSubmissions from "../pages/assessments/AssignmentSubmissions";
 import GradeAssignmentSubmission from "../pages/assessments/GradeAssignmentSubmission";
-
+import AssessmentQuestionList from "../pages/assessments/AssessmentQuestionList";
+import AssessmentQuestionCreate from "../pages/assessments/AssessmentQuestionCreate";
+import AssessmentQuestionEdit from "../pages/assessments/AssessmentQuestionEdit";
+import StudentQuiz from "../pages/students/StudentQuiz";
+import StudentQuizResult from "../pages/students/StudentQuizResult";
+import AssessmentQuizAttempts from "../pages/assessments/AssessmentQuizAttempts";
 import StudentMyAssessments from "../pages/students/StudentMyAssessments";
 import StudentAssessmentDetails from "../pages/students/StudentAssessmentDetails";
+import AssessmentQuizAttemptDetails from "../pages/assessments/AssessmentQuizAttemptDetails";
 
 function getCurrentUser() {
   const savedUser = localStorage.getItem("user");
@@ -131,10 +137,33 @@ function AppRoutes() {
         <Route path="assessments/create" element={<AssessmentCreate />} />
         <Route path="assessments/:id" element={<AssessmentDetails />} />
         <Route path="assessments/:id/edit" element={<AssessmentEdit />} />
-        <Route path="assessments/:id/submissions/:submissionId/grade"element={<GradeAssignmentSubmission />}/>
+        <Route
+          path="assessments/:id/quiz-attempts"
+          element={<AssessmentQuizAttempts />}
+        />
+        <Route
+          path="assessments/:id/questions"
+          element={<AssessmentQuestionList />}
+        />
+        <Route
+          path="assessments/:id/questions/create"
+          element={<AssessmentQuestionCreate />}
+        />
+        <Route
+          path="assessments/:id/submissions/:submissionId/grade"
+          element={<GradeAssignmentSubmission />}
+        />
         <Route
           path="assessments/:id/submissions"
           element={<AssignmentSubmissions />}
+        />
+        <Route
+          path="assessments/:id/questions/:questionId/edit"
+          element={<AssessmentQuestionEdit />}
+        />
+        <Route
+          path="assessments/:id/quiz-attempts/:attemptId"
+          element={<AssessmentQuizAttemptDetails />}
         />
       </Route>
 
@@ -153,6 +182,8 @@ function AppRoutes() {
         <Route path="subjects" element={<StudentMySubjects />} />
         <Route path="assessments" element={<StudentMyAssessments />} />
         <Route path="assessments/:id" element={<StudentAssessmentDetails />} />
+        <Route path="quizzes/:id" element={<StudentQuiz />} />
+        <Route path="quizzes/:id/result" element={<StudentQuizResult />} />
       </Route>
 
       <Route
@@ -174,10 +205,33 @@ function AppRoutes() {
         <Route path="assessments/create" element={<AssessmentCreate />} />
         <Route path="assessments/:id" element={<AssessmentDetails />} />
         <Route path="assessments/:id/edit" element={<AssessmentEdit />} />
-        <Route path="assessments/:id/submissions/:submissionId/grade"element={<GradeAssignmentSubmission />}/>
+        <Route
+          path="assessments/:id/questions"
+          element={<AssessmentQuestionList />}
+        />
+        <Route
+          path="assessments/:id/questions/create"
+          element={<AssessmentQuestionCreate />}
+        />
+        <Route
+          path="assessments/:id/submissions/:submissionId/grade"
+          element={<GradeAssignmentSubmission />}
+        />
         <Route
           path="assessments/:id/submissions"
           element={<AssignmentSubmissions />}
+        />
+        <Route
+          path="assessments/:id/questions/:questionId/edit"
+          element={<AssessmentQuestionEdit />}
+        />
+        <Route
+          path="assessments/:id/quiz-attempts"
+          element={<AssessmentQuizAttempts />}
+        />
+        <Route
+          path="assessments/:id/quiz-attempts/:attemptId"
+          element={<AssessmentQuizAttemptDetails />}
         />
 
         <Route path="students" element={<ComingSoon title="My Students" />} />

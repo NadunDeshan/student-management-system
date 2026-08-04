@@ -338,6 +338,15 @@ function AssessmentList() {
                               <strong>View Submissions</strong>
                             </Link>
                           )}
+                          {assessment.type === "mcq" && (
+                                      <Link
+                                        to={`${basePath}/${assessment.id}/questions`}
+                                        className="btn btn-outline-success btn-sm"
+                                      >
+                                        <FaFileAlt className="me-2" />
+                                        <strong>Manage Questions</strong>
+                                      </Link>
+                                    )}
                           <Link
                             to={`${basePath}/${assessment.id}`}
                             className="btn btn-sm btn-outline-info"

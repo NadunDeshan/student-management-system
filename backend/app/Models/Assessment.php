@@ -53,4 +53,17 @@ class Assessment extends Model
             AssignmentSubmission::class
         );
     }
+    public function questions()
+    {
+        return $this->hasMany(
+            AssessmentQuestion::class
+        )->orderBy('order_number');
+    }
+
+    public function quizAttempts()
+    {
+        return $this->hasMany(
+            QuizAttempt::class
+        );
+    }
 }
