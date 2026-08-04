@@ -6,6 +6,7 @@ import {
     FaPlus,
     FaSearch,
     FaTrash,
+    FaBook,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -263,12 +264,20 @@ function StudentList() {
 
                                         <td className="text-end text-nowrap">
                                             <Link
+                                                        to={`/admin/students/${student.id}/subjects`}
+                                                        className="btn btn-outline-primary btn-sm  me-2"
+                                                      >
+                                                        <FaBook className="me-2" />
+                                                        Assign Subjects
+                                            </Link>
+                                            <Link
                                                 to={`/admin/students/${student.id}`}
                                                 className="btn btn-sm btn-outline-primary me-2"
                                                 title="View student"
                                             >
                                                 <FaEye />
                                             </Link>
+                                            
 
                                             <Link
                                                 to={`/admin/students/${student.id}/edit`}

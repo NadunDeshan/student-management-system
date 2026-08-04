@@ -40,8 +40,12 @@ class Student extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class,'student_subject')
-        ->withPivot('registered_at')
+        return $this->belongsToMany(Subject::class, 'student_subject')
+            ->withPivot('registered_at')
             ->withTimestamps();
+    }
+    public function assignmentSubmissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
     }
 }

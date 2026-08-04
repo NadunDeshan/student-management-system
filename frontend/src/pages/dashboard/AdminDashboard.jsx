@@ -55,13 +55,18 @@ function AdminDashboard() {
       active: statistics.active_lecturers,
       icon: <FaChalkboardTeacher />,
     },
+    // {
+    //   title: "Subjects",
+    //   total: statistics.total_subjects,
+    //   icon: <FaBook />,
+    // },
   ];
 
   return (
     <>
       <div className="page-header">
         <div>
-          <h1 className="page-title">Admin Dashboard</h1>
+          <h1 className="page-title">Welcome Back to the Admin Dashboard</h1>
 
           <p className="page-subtitle">
             Welcome to your Student Management System.

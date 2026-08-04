@@ -48,7 +48,7 @@ class StoreLecturerRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:8',
+                'min:4',
             ],
 
             'phone_number' => [
@@ -111,7 +111,7 @@ class StoreLecturerRequest extends FormRequest
                 'The password is required.',
 
             'password.min' =>
-                'The password must contain at least 8 characters.',
+                'The password must contain at least 4 characters.',
 
             'hire_date.before_or_equal' =>
                 'The hire date cannot be in the future.',

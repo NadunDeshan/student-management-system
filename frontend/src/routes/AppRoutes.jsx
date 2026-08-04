@@ -33,6 +33,8 @@ import AssessmentList from "../pages/assessments/AssessmentList";
 import AssessmentCreate from "../pages/assessments/AssessmentCreate";
 import AssessmentDetails from "../pages/assessments/AssessmentDetails";
 import AssessmentEdit from "../pages/assessments/AssessmentEdit";
+import AssignmentSubmissions from "../pages/assessments/AssignmentSubmissions";
+import GradeAssignmentSubmission from "../pages/assessments/GradeAssignmentSubmission";
 
 import StudentMyAssessments from "../pages/students/StudentMyAssessments";
 import StudentAssessmentDetails from "../pages/students/StudentAssessmentDetails";
@@ -53,7 +55,6 @@ function getCurrentUser() {
     return null;
   }
 }
-
 // function AdminRoute({ children }) {
 //     const token = localStorage.getItem('token');
 //     const user = getCurrentUser();
@@ -68,7 +69,6 @@ function getCurrentUser() {
 //
 //     return children;
 // }
-
 function RoleRoute({ allowedRole, children }) {
   const token = localStorage.getItem("token");
   const user = getCurrentUser();
@@ -83,7 +83,6 @@ function RoleRoute({ allowedRole, children }) {
 
   return children;
 }
-
 function HomeRedirect() {
   const token = localStorage.getItem("token");
   const user = getCurrentUser();
@@ -132,8 +131,11 @@ function AppRoutes() {
         <Route path="assessments/create" element={<AssessmentCreate />} />
         <Route path="assessments/:id" element={<AssessmentDetails />} />
         <Route path="assessments/:id/edit" element={<AssessmentEdit />} />
-
-        <Route path="exams" element={<ComingSoon title="Exams" />} />
+        <Route path="assessments/:id/submissions/:submissionId/grade"element={<GradeAssignmentSubmission />}/>
+        <Route
+          path="assessments/:id/submissions"
+          element={<AssignmentSubmissions />}
+        />
       </Route>
 
       <Route
@@ -167,10 +169,16 @@ function AppRoutes() {
         <Route path="profile" element={<ComingSoon title="My Profile" />} />
         <Route path="subjects" element={<LecturerMySubjects />} />
         <Route path="subjects/:id" element={<LecturerSubjectStudents />} />
+
         <Route path="assessments" element={<AssessmentList />} />
         <Route path="assessments/create" element={<AssessmentCreate />} />
         <Route path="assessments/:id" element={<AssessmentDetails />} />
         <Route path="assessments/:id/edit" element={<AssessmentEdit />} />
+        <Route path="assessments/:id/submissions/:submissionId/grade"element={<GradeAssignmentSubmission />}/>
+        <Route
+          path="assessments/:id/submissions"
+          element={<AssignmentSubmissions />}
+        />
 
         <Route path="students" element={<ComingSoon title="My Students" />} />
         <Route path="exams" element={<ComingSoon title="Examinations" />} />

@@ -47,4 +47,10 @@ class Assessment extends Model
             'created_by'
         );
     }
+    public function submissions()
+    {
+        return $this->hasMany(
+            AssignmentSubmission::class
+        );
+    }
 }

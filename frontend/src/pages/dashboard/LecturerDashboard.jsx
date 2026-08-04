@@ -41,11 +41,11 @@ function LecturerDashboard() {
             <div className="page-header">
                 <div>
                     <h1 className="page-title">
-                        Lecturer Dashboard
+                        Welcome back, {user?.name || 'Lecturer'}
                     </h1>
 
                     <p className="page-subtitle">
-                        Welcome back, {user?.name || 'Lecturer'}.
+                        Lecturer Dashboard
                     </p>
                 </div>
             </div>

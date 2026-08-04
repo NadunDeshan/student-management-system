@@ -48,7 +48,7 @@ class UpdateStudentRequest extends FormRequest
             'password' => [
                 'nullable',
                 'string',
-                'min:8',
+                'min:4',
             ],
 
             'phone_number' => [
@@ -112,7 +112,7 @@ class UpdateStudentRequest extends FormRequest
                 'This email address belongs to another account.',
 
             'password.min' =>
-                'The password must contain at least 8 characters.',
+                'The password must contain at least 4 characters.',
 
             'date_of_birth.before' =>
                 'The date of birth must be before today.',

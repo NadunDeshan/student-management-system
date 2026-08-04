@@ -43,7 +43,7 @@ class StoreStudentRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:8',
+                'min:4',
             ],
 
             'phone_number' => [
@@ -122,7 +122,7 @@ class StoreStudentRequest extends FormRequest
                 'The password is required.',
 
             'password.min' =>
-                'The password must contain at least 8 characters.',
+                'The password must contain at least 4 characters.',
         ];
     }
 }

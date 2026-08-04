@@ -41,7 +41,7 @@ class StudentAssessmentController extends Controller
         $registeredSubjectIds = $student
             ->subjects()
             ->pluck('subjects.id');
-
+            
         $assessments = Assessment::query()
             ->with([
                 'subject',

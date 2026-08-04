@@ -200,12 +200,11 @@ function SubjectList() {
                       <td><strong>{subject.subject_name}</strong></td>
 
                       <td>{subject.lecturer?.full_name ?? "-"}</td>
+
                       <td>
                         <div>
-                          <strong>{subject.lecturer?.department ?? "-"}</strong>
-                           <div>{subject.lecturer?.specialization ?? ""}</div>
-                            
-                          
+                          <strong>{subject.lecturer?.department ?? "-"} |{" "}</strong>
+                           {subject.lecturer?.specialization ?? ""}
                         </div>
                       </td>
 

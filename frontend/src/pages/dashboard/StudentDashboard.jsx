@@ -35,11 +35,11 @@ function StudentDashboard() {
             <div className="page-header">
                 <div>
                     <h1 className="page-title">
-                        Student Dashboard
+                        Welcome back, {user?.name || 'Student'}
                     </h1>
 
                     <p className="page-subtitle">
-                        Welcome back, {user?.name || 'Student'}.
+                        Student Dashboard
                     </p>
                 </div>
             </div>

@@ -75,14 +75,7 @@ function StudentDetails() {
           >
             Back
           </Link>
-          <Link
-            to={`/admin/students/${student.id}/subjects`}
-            className="btn btn-system me-2"
-          >
-            <FaBook className="me-2" />
-            Assign Subjects
-          </Link>
-
+        
           <Link
             to={`/admin/students/${student.id}/edit`}
             className="btn btn-system"
