@@ -175,12 +175,12 @@ function AssessmentQuestionForm({
           </div>
         </div>
 
-        <div className="col-md-4">
+        {/* <div className="col-md-4">
           <label className="form-label">
             Question Order
-          </label>
+          </label> */}
 
-          <input
+          {/* <input
             type="number"
             name="order_number"
             min="1"
@@ -192,26 +192,12 @@ function AssessmentQuestionForm({
             value={formData.order_number}
             onChange={handleQuestionChange}
             placeholder="Automatic"
-          />
+          /> */}
 
-          <div className="invalid-feedback">
+          {/* <div className="invalid-feedback">
             {fieldError("order_number")}
           </div>
-        </div>
-
-        <div className="col-md-4 d-flex align-items-end">
-          <button
-            type="button"
-            className="btn btn-outline-info w-100"
-            onClick={addOption}
-            disabled={
-              formData.options.length >= 6
-            }
-          >
-            <FaPlus className="me-2" />
-            Add Option
-          </button>
-        </div>
+        </div> */}
 
         <div className="col-12">
           <div className="assessment-section-title">
@@ -327,6 +313,19 @@ function AssessmentQuestionForm({
         )}
 
         <div className="col-12 mt-4">
+          <div className="col-md-12 mb-3 d-flex align-items-end">
+          <button
+            type="button"
+            className="btn btn-outline-info w-100"
+            onClick={addOption}
+            disabled={
+              formData.options.length >= 6
+            }
+          >
+            <FaPlus className="me-2" />
+            Add Option
+          </button>
+        </div>
           <button
             type="submit"
             className="btn btn-system px-4"
@@ -336,6 +335,7 @@ function AssessmentQuestionForm({
               ? "Please wait..."
               : submitText}
           </button>
+          
         </div>
       </div>
     </form>

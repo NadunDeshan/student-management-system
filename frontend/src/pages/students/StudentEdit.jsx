@@ -118,7 +118,7 @@ function StudentEdit() {
                 width: "350px",
             });
 
-            navigate(`/admin/students/${id}`);
+            navigate('/admin/students');
         } catch (requestError) {
             if (requestError.response?.status === 422) {
                 setErrors(

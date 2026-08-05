@@ -21,3 +21,5 @@ This project contains:
 
 - Student CRUD
 - Lecturer CRUD
+- Subject CRUD
+- Assesment CRUD

@@ -25,11 +25,9 @@ function StudentAssessmentDetails() {
 
   const [submission, setSubmission] = useState(null);
   const [submissionFile, setSubmissionFile] = useState(null);
-  const [submissionLoading, setSubmissionLoading] =
-    useState(false);
+  const [submissionLoading, setSubmissionLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submissionError, setSubmissionError] =
-    useState("");
+  const [submissionError, setSubmissionError] = useState("");
 
   DocumentTitle("Assessment Details");
 
@@ -39,9 +37,7 @@ function StudentAssessmentDetails() {
         setLoading(true);
         setError("");
 
-        const response = await api.get(
-          `/student/assessments/${id}`,
-        );
+        const response = await api.get(`/student/assessments/${id}`);
 
         const assessmentData = response.data.data;
 
@@ -56,15 +52,12 @@ function StudentAssessmentDetails() {
               `/student/assignments/${id}/submission`,
             );
 
-            setSubmission(
-              submissionResponse.data.submission ?? null,
-            );
+            setSubmission(submissionResponse.data.submission ?? null);
           } catch (submissionRequestError) {
             console.error(submissionRequestError);
 
             setSubmissionError(
-              submissionRequestError.response?.data
-                ?.message ??
+              submissionRequestError.response?.data?.message ??
                 "Unable to load your assignment submission.",
             );
           } finally {
@@ -76,9 +69,7 @@ function StudentAssessmentDetails() {
 
         if (requestError.response?.status === 404) {
           setError("Assessment not found.");
-        } else if (
-          requestError.response?.status === 403
-        ) {
+        } else if (requestError.response?.status === 403) {
           setError(
             requestError.response?.data?.message ??
               "You cannot view this assessment.",
@@ -105,9 +96,7 @@ function StudentAssessmentDetails() {
     event.preventDefault();
 
     if (!submissionFile) {
-      setSubmissionError(
-        "Please select a file before submitting.",
-      );
+      setSubmissionError("Please select a file before submitting.");
 
       return;
     }
@@ -118,25 +107,18 @@ function StudentAssessmentDetails() {
 
       const data = new FormData();
 
-      data.append(
-        "submission_file",
-        submissionFile,
-      );
+      data.append("submission_file", submissionFile);
 
       const response = await api.post(
         `/student/assignments/${id}/submission`,
         data,
       );
 
-      setSubmission(
-        response.data.submission ?? null,
-      );
+      setSubmission(response.data.submission ?? null);
 
       setSubmissionFile(null);
 
-      const fileInput = document.getElementById(
-        "assignment-submission-file",
-      );
+      const fileInput = document.getElementById("assignment-submission-file");
 
       if (fileInput) {
         fileInput.value = "";
@@ -146,9 +128,7 @@ function StudentAssessmentDetails() {
         toast: true,
         position: "top-end",
         icon: "success",
-        title:
-          response.data.message ??
-          "Assignment submitted successfully.",
+        title: response.data.message ?? "Assignment submitted successfully.",
         showConfirmButton: false,
         timer: 1700,
         timerProgressBar: true,
@@ -162,8 +142,7 @@ function StudentAssessmentDetails() {
 
       if (requestError.response?.status === 422) {
         const validationMessage =
-          requestError.response?.data?.errors
-            ?.submission_file?.[0];
+          requestError.response?.data?.errors?.submission_file?.[0];
 
         setSubmissionError(
           validationMessage ??
@@ -198,16 +177,13 @@ function StudentAssessmentDetails() {
       return "-";
     }
 
-    return new Date(value).toLocaleString(
-      "en-GB",
-      {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      },
-    );
+    return new Date(value).toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   const formatDate = (value) => {
@@ -215,14 +191,11 @@ function StudentAssessmentDetails() {
       return "-";
     }
 
-    return new Date(value).toLocaleDateString(
-      "en-GB",
-      {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      },
-    );
+    return new Date(value).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   };
 
   const getStatusBadgeClass = (status) => {
@@ -244,9 +217,7 @@ function StudentAssessmentDetails() {
   };
 
   if (loading) {
-    return (
-      <Loading message="Loading assessment..." />
-    );
+    return <Loading message="Loading assessment..." />;
   }
 
   if (error || !assessment) {
@@ -256,10 +227,7 @@ function StudentAssessmentDetails() {
           {error || "Assessment not found."}
         </div>
 
-        <Link
-          to="/student/assessments"
-          className="btn btn-outline-light"
-        >
+        <Link to="/student/assessments" className="btn btn-outline-light">
           <FaArrowLeft className="me-2" />
           Back to Assessments
         </Link>
@@ -271,19 +239,14 @@ function StudentAssessmentDetails() {
     <>
       <div className="page-header">
         <div>
-          <h1 className="page-title">
-            Assessment Details
-          </h1>
+          <h1 className="page-title">Assessment Details</h1>
 
           <p className="page-subtitle">
             View assessment instructions and schedule.
           </p>
         </div>
 
-        <Link
-          to="/student/assessments"
-          className="btn btn-outline-light"
-        >
+        <Link to="/student/assessments" className="btn btn-outline-light">
           <FaArrowLeft className="me-2" />
           Back
         </Link>
@@ -296,13 +259,9 @@ function StudentAssessmentDetails() {
               <FaFileAlt />
             </div>
 
-            <h3 className="mt-3 mb-2">
-              {assessment.title}
-            </h3>
+            <h3 className="mt-3 mb-2">{assessment.title}</h3>
 
-            <span className="stext">
-              {formatType(assessment.type)}
-            </span>
+            <span className="stext">{formatType(assessment.type)}</span>
 
             <div className="mt-3">
               <span
@@ -318,18 +277,14 @@ function StudentAssessmentDetails() {
 
         <div className="col-lg-8">
           <div className="dashboard-panel h-100">
-            <h4 className="mb-4">
-              Assessment Information
-            </h4>
+            <h4 className="mb-4">Assessment Information</h4>
 
             <div className="row g-3">
               <div className="col-md-6">
                 <div className="student-profile-field">
                   <span>Assessment Type</span>
 
-                  <strong>
-                    {formatType(assessment.type)}
-                  </strong>
+                  <strong>{formatType(assessment.type)}</strong>
                 </div>
               </div>
 
@@ -337,9 +292,7 @@ function StudentAssessmentDetails() {
                 <div className="student-profile-field">
                   <span>Total Marks</span>
 
-                  <strong>
-                    {assessment.total_marks}
-                  </strong>
+                  <strong>{assessment.total_marks}</strong>
                 </div>
               </div>
 
@@ -357,9 +310,7 @@ function StudentAssessmentDetails() {
                 <div className="student-profile-field">
                   <span>Created By</span>
 
-                  <strong>
-                    {assessment.creator?.name ?? "-"}
-                  </strong>
+                  <strong>{assessment.creator?.name ?? "-"}</strong>
                 </div>
               </div>
 
@@ -367,76 +318,18 @@ function StudentAssessmentDetails() {
                 <div className="student-profile-field">
                   <span>Description</span>
 
-                  <strong>
-                    {assessment.description || "-"}
-                  </strong>
+                  <strong>{assessment.description || "-"}</strong>
                 </div>
               </div>
             </div>
           </div>
         </div>
+{/* //----------------------------------------------------------------------------------------------- */}
+        
 
         <div className="col-12">
           <div className="dashboard-panel">
-            <div className="d-flex align-items-center gap-3 mb-4">
-              <div className="stat-icon">
-                <FaBook />
-              </div>
-
-              <div>
-                <h4 className="mb-1">
-                  Subject Information
-                </h4>
-
-                <p className="stext mb-0">
-                  Subject connected to this assessment.
-                </p>
-              </div>
-            </div>
-
-            <div className="row g-3">
-              <div className="col-md-4">
-                <div className="student-profile-field">
-                  <span>Subject Code</span>
-
-                  <strong>
-                    {assessment.subject
-                      ?.subject_code ?? "-"}
-                  </strong>
-                </div>
-              </div>
-
-              <div className="col-md-4">
-                <div className="student-profile-field">
-                  <span>Subject Name</span>
-
-                  <strong>
-                    {assessment.subject
-                      ?.subject_name ?? "-"}
-                  </strong>
-                </div>
-              </div>
-
-              <div className="col-md-4">
-                <div className="student-profile-field">
-                  <span>Semester</span>
-
-                  <strong>
-                    Semester{" "}
-                    {assessment.subject?.semester ??
-                      "-"}
-                  </strong>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12">
-          <div className="dashboard-panel">
-            <h4 className="mb-4">
-              Schedule and Availability
-            </h4>
+            <h4 className="mb-4">Schedule and Availability</h4>
 
             <div className="row g-3">
               <div className="col-md-6">
@@ -446,11 +339,7 @@ function StudentAssessmentDetails() {
                     Available From
                   </span>
 
-                  <strong>
-                    {formatDateTime(
-                      assessment.available_from,
-                    )}
-                  </strong>
+                  <strong>{formatDateTime(assessment.available_from)}</strong>
                 </div>
               </div>
 
@@ -461,16 +350,11 @@ function StudentAssessmentDetails() {
                     Due Date
                   </span>
 
-                  <strong>
-                    {formatDateTime(
-                      assessment.due_date,
-                    )}
-                  </strong>
+                  <strong>{formatDateTime(assessment.due_date)}</strong>
                 </div>
               </div>
 
-              {assessment.type ===
-                "written_exam" && (
+              {assessment.type === "written_exam" && (
                 <>
                   <div className="col-md-6">
                     <div className="student-profile-field">
@@ -479,11 +363,7 @@ function StudentAssessmentDetails() {
                         Exam Date
                       </span>
 
-                      <strong>
-                        {formatDate(
-                          assessment.exam_date,
-                        )}
-                      </strong>
+                      <strong>{formatDate(assessment.exam_date)}</strong>
                     </div>
                   </div>
 
@@ -494,9 +374,7 @@ function StudentAssessmentDetails() {
                         Start Time
                       </span>
 
-                      <strong>
-                        {assessment.start_time || "-"}
-                      </strong>
+                      <strong>{assessment.start_time || "-"}</strong>
                     </div>
                   </div>
 
@@ -522,9 +400,7 @@ function StudentAssessmentDetails() {
                         Location
                       </span>
 
-                      <strong>
-                        {assessment.location || "-"}
-                      </strong>
+                      <strong>{assessment.location || "-"}</strong>
                     </div>
                   </div>
                 </>
@@ -538,13 +414,10 @@ function StudentAssessmentDetails() {
             <div className="dashboard-panel">
               <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div>
-                  <h4 className="mb-1">
-                    Assessment PDF
-                  </h4>
+                  <h4 className="mb-1">Assessment PDF</h4>
 
                   <p className="stext mb-0">
-                    Open the attached instructions or
-                    question paper.
+                    Open the attached instructions or question paper.
                   </p>
                 </div>
 
@@ -571,9 +444,7 @@ function StudentAssessmentDetails() {
                 </div>
 
                 <div>
-                  <h4 className="mb-1">
-                    Assignment Submission
-                  </h4>
+                  <h4 className="mb-1">Assignment Submission</h4>
 
                   <p className="stext mb-0">
                     Upload your completed assignment file.
@@ -582,9 +453,7 @@ function StudentAssessmentDetails() {
               </div>
 
               {submissionLoading ? (
-                <p className="stext mb-0">
-                  Loading submission...
-                </p>
+                <p className="stext mb-0">Loading submission...</p>
               ) : (
                 <>
                   {submission && (
@@ -592,9 +461,7 @@ function StudentAssessmentDetails() {
                       <div className="row g-3">
                         <div className="col-md-6">
                           <div className="student-profile-field">
-                            <span>
-                              Submission Status
-                            </span>
+                            <span>Submission Status</span>
 
                             <div>
                               <span
@@ -610,14 +477,10 @@ function StudentAssessmentDetails() {
 
                         <div className="col-md-6">
                           <div className="student-profile-field">
-                            <span>
-                              Submitted At
-                            </span>
+                            <span>Submitted At</span>
 
                             <strong>
-                              {formatDateTime(
-                                submission.submitted_at,
-                              )}
+                              {formatDateTime(submission.submitted_at)}
                             </strong>
                           </div>
                         </div>
@@ -627,8 +490,7 @@ function StudentAssessmentDetails() {
                             <span>Marks</span>
 
                             <strong>
-                              {submission.marks !==
-                              null
+                              {submission.marks !== null
                                 ? `${submission.marks} / ${assessment.total_marks}`
                                 : "Not graded yet"}
                             </strong>
@@ -640,8 +502,7 @@ function StudentAssessmentDetails() {
                             <span>Feedback</span>
 
                             <strong>
-                              {submission.feedback ||
-                                "No feedback yet"}
+                              {submission.feedback || "No feedback yet"}
                             </strong>
                           </div>
                         </div>
@@ -649,9 +510,7 @@ function StudentAssessmentDetails() {
 
                       {submission.submission_file_url && (
                         <a
-                          href={
-                            submission.submission_file_url
-                          }
+                          href={submission.submission_file_url}
                           target="_blank"
                           rel="noreferrer"
                           className="btn btn-outline-info mt-3"
@@ -664,68 +523,54 @@ function StudentAssessmentDetails() {
                   )}
 
                   {submissionError && (
-                    <div className="alert alert-danger">
-                      {submissionError}
-                    </div>
+                    <div className="alert alert-danger">{submissionError}</div>
                   )}
 
                   {submission?.status === "graded" ? (
                     <div className="alert alert-info mb-0">
-                      This submission has already been
-                      graded and cannot be replaced.
+                      This submission has already been graded and cannot be
+                      replaced.
                     </div>
                   ) : (
-                    <form
-                      onSubmit={
-                        handleAssignmentSubmit
-                      }
-                    >
+                    <form onSubmit={handleAssignmentSubmit}>
                       <div className="row g-3 align-items-end">
                         <div className="col-lg-8">
                           <label className="form-label">
                             Submission File
-                            <span className="required-mark">
-                              {" "}
-                              *
-                            </span>
+                            <span className="required-mark"> *</span>
                           </label>
 
                           <input
                             id="assignment-submission-file"
                             type="file"
                             className={`form-control ${
-                              submissionError
-                                ? "is-invalid"
-                                : ""
+                              submissionError ? "is-invalid" : ""
                             }`}
                             accept=".pdf,.doc,.docx,.zip"
-                            onChange={
-                              handleSubmissionFileChange
-                            }
+                            onChange={handleSubmissionFileChange}
                           />
 
                           <small className="page-subtitle">
-                            Allowed: PDF, DOC, DOCX and
-                            ZIP. Maximum size: 20 MB.
+                            Allowed: PDF, DOC, DOCX and ZIP. Maximum size: 20
+                            MB.
                           </small>
                         </div>
-
                       </div>
                       <div className="col-lg-2">
-                          <button
-                            type="submit"
-                            className="btn btn-system w-100 mt-4"
-                            disabled={submitting}
-                          >
-                            <FaPaperPlane className="me-2" />
+                        <button
+                          type="submit"
+                          className="btn btn-system w-100 mt-4"
+                          disabled={submitting}
+                        >
+                          <FaPaperPlane className="me-2" />
 
-                            {submitting
-                              ? "Submitting..."
-                              : submission
-                                ? "Replace Submission"
-                                : "Submit Assignment"}
-                          </button>
-                        </div>
+                          {submitting
+                            ? "Submitting..."
+                            : submission
+                              ? "Replace Submission"
+                              : "Submit Assignment"}
+                        </button>
+                      </div>
                     </form>
                   )}
                 </>
@@ -735,31 +580,75 @@ function StudentAssessmentDetails() {
         )}
 
         {assessment.type === "mcq" && (
-  <div className="col-12">
-    <div className="dashboard-panel">
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-        <div>
-          <h4 className="mb-1">
-            MCQ Quiz
-          </h4>
+          <div className="col-12">
+            <div className="dashboard-panel">
+              <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                  <h4 className="mb-1">MCQ Quiz</h4>
 
-          <p className="stext mb-0">
-            Start the quiz and submit your answers.
-            Only one attempt is allowed.
-          </p>
+                  <p className="stext mb-0">
+                    Start the quiz and submit your answers. Only one attempt is
+                    allowed.
+                  </p>
+                </div>
+
+                <Link
+                  to={`/student/quizzes/${assessment.id}`}
+                  className="btn btn-system"
+                >
+                  Start Quiz
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="col-12 mt-4">
+          <div className="dashboard-panel">
+            <div className="d-flex align-items-center gap-3 mb-4">
+              <div className="stat-icon">
+                <FaBook />
+              </div>
+
+              <div>
+                <h4 className="mb-1">Subject Information</h4>
+
+                <p className="stext mb-0">
+                  Subject connected to this assessment.
+                </p>
+              </div>
+            </div>
+
+            <div className="row g-3">
+              <div className="col-md-4">
+                <div className="student-profile-field">
+                  <span>Subject Code</span>
+
+                  <strong>{assessment.subject?.subject_code ?? "-"}</strong>
+                </div>
+              </div>
+
+              <div className="col-md-4">
+                <div className="student-profile-field">
+                  <span>Subject Name</span>
+
+                  <strong>{assessment.subject?.subject_name ?? "-"}</strong>
+                </div>
+              </div>
+
+              <div className="col-md-4">
+                <div className="student-profile-field">
+                  <span>Semester</span>
+
+                  <strong>
+                    Semester {assessment.subject?.semester ?? "-"}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <Link
-          to={`/student/quizzes/${assessment.id}`}
-          className="btn btn-system"
-        >
-          Start Quiz
-        </Link>
-      </div>
-    </div>
-  </div>
-)}
-      </div>
     </>
   );
 }

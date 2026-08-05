@@ -211,13 +211,7 @@ function AssessmentQuestionList() {
             Back
           </Link>
 
-          <Link
-            to={`${basePath}/${id}/questions/create`}
-            className="btn btn-system"
-          >
-            <FaPlus className="me-2" />
-            Add Question
-          </Link>
+          
         </div>
       </div>
 
@@ -287,6 +281,8 @@ function AssessmentQuestionList() {
       )}
 
       <div className="content-card">
+          
+
         {questions.length === 0 ? (
           <div className="text-center py-5">
             <div className="stat-icon mx-auto mb-3">
@@ -401,6 +397,13 @@ function AssessmentQuestionList() {
             )}
           </div>
         )}
+        <Link
+            to={`${basePath}/${id}/questions/create`}
+            className="btn btn-system me-2 mb-3 mt-3 justify-content-center d-flex align-items-center " 
+          >
+            <FaPlus className="me-2" />
+            Add Next Question
+          </Link>
       </div>
     </>
   );

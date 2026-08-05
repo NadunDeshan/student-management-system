@@ -125,7 +125,7 @@ function StudentSubjects() {
                 width: '350px',
             });
 
-            navigate(`/admin/students/${id}`);
+            navigate('/admin/students');
         } catch (requestError) {
             console.error(requestError);
 

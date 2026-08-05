@@ -213,7 +213,8 @@ function LecturerEdit() {
             });
 
 
-            navigate(`/admin/lecturers/${id}`);
+            // navigate(`/admin/lecturers/${id}`);
+            navigate('/admin/lecturers');
         } catch (requestError) {
             if (requestError.response?.status === 422) {
                 setErrors(

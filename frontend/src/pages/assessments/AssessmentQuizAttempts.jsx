@@ -174,7 +174,7 @@ function AssessmentQuizAttempts() {
         </div>
 
         <Link
-          to={`${basePath}/${id}`}
+          to={'/lecturer/assessments'}
           className="btn btn-outline-light"
         >
           <FaArrowLeft className="me-2" />
@@ -313,7 +313,7 @@ function AssessmentQuizAttempts() {
                               {student.full_name}
                             </strong>
 
-                            <div className="small page-subtitle">
+                            <div className="small ">
                               {student.email}
                             </div>
                           </div>
@@ -389,10 +389,11 @@ function AssessmentQuizAttempts() {
                             "submitted" && (
                             <Link
                               to={`${basePath}/${id}/quiz-attempts/${attempt.id}`}
-                              className="btn btn-sm btn-outline-info"
+                              className="btn btn-sm btn-outline-dark"
                               title="View result details"
                             >
                               <FaEye />
+                              <span className="ms-2">View</span>
                             </Link>
                           )}
                         </div>

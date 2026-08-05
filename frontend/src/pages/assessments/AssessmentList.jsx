@@ -335,9 +335,18 @@ function AssessmentList() {
                               className="btn btn-outline-success btn-sm"
                             >
                               <FaUsers className="me-2" />
-                              <strong>View Submissions</strong>
+                              <strong>{"  "}View Submissions</strong>
                             </Link>
                           )}
+                          {assessment.type === "mcq" && (
+                                      <Link
+                                        to={`${basePath}/${assessment.id}/quiz-attempts`}
+                                        className="btn btn-outline-dark btn-sm"
+                                      >
+                                        
+                                       <strong> <FaUsers className="me-2" />Results</strong>
+                                      </Link>
+                                    )}
                           {assessment.type === "mcq" && (
                                       <Link
                                         to={`${basePath}/${assessment.id}/questions`}

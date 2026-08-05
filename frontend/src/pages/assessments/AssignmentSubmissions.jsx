@@ -150,7 +150,7 @@ function AssignmentSubmissions() {
         </div>
 
         <Link
-          to={`${basePath}/${id}`}
+          to={'/lecturer/assessments'}
           className="btn btn-outline-light"
         >
           <FaArrowLeft className="me-2" />

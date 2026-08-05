@@ -143,15 +143,7 @@ function AssessmentDetails() {
             <FaArrowLeft className="me-2" />
             Back
           </Link>
-          {assessment.type === "mcq" && (
-            <Link
-              to={`${basePath}/${assessment.id}/quiz-attempts`}
-              className="btn btn-outline-info"
-            >
-              <FaUsers className="me-2" />
-              View Quiz Results
-            </Link>
-          )}
+          
 
           <Link
             to={`${basePath}/${assessment.id}/download`}
